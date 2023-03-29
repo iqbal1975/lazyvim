@@ -11,6 +11,10 @@ if vim.fn.executable("btop") == 1 then
 end
 -- BTop Terminal
 
+-- Clear Search
+vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { noremap = true, silent = false, desc = "Clear Search" })
+-- Clear Search
+
 -- Github Keymaps
 local wk = require("which-key")
 wk.register({
