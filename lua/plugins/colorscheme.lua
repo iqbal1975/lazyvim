@@ -4,7 +4,11 @@ return {
   { "folke/tokyonight.nvim" },
 
   -- Catppuccin Colorscheme
-  { "catppuccin/nvim", name = "catppuccin" },
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    name = "catppuccin",
+  },
 
   -- Moonbow Colorscheme
   { "arturgoms/moonbow.nvim" },
@@ -15,8 +19,13 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      -- colorscheme = "tokyonight-night",
+      -- Tokyonight Colorscheme
+      -- colorscheme = "tokyonight",
+      -- style = "night",
+      -- Catppuccin Colorscheme
       colorscheme = "catppuccin",
+      opts = nil,
+      -- Moonbow Colorscheme
       -- colorscheme = "moonbow",
     },
   },

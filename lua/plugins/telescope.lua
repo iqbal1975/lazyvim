@@ -20,6 +20,24 @@ return {
         winblend = 0,
         mappings = {
           i = {
+            ["<c-t>"] = function(...)
+              return require("trouble.providers.telescope").open_with_trouble(...)
+            end,
+            ["<a-t>"] = function(...)
+              return require("trouble.providers.telescope").open_selected_with_trouble(...)
+            end,
+            ["<C-Down>"] = function(...)
+              return require("telescope.actions").cycle_history_next(...)
+            end,
+            ["<C-Up>"] = function(...)
+              return require("telescope.actions").cycle_history_prev(...)
+            end,
+            ["<C-f>"] = function(...)
+              return require("telescope.actions").preview_scrolling_down(...)
+            end,
+            ["<C-b>"] = function(...)
+              return require("telescope.actions").preview_scrolling_up(...)
+            end,
             ["<C-j>"] = function(...)
               return require("telescope.actions").move_selection_next(...)
             end,

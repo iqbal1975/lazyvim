@@ -6,17 +6,36 @@
 -- * override the configuration of LazyVim plugins
 return {
 
-  -- Focus on one tab when creating new ones
-  { "tiagovla/scope.nvim" },
+  -- Scopes
+  {
+    "tiagovla/scope.nvim",
+    event = "VeryLazy",
+    config = true,
+  },
 
-  -- change trouble config
+  -- Editor config support
+  {
+    "editorconfig/editorconfig-vim",
+    event = "VeryLazy",
+  },
+
+  -- Tidy
+  {
+    "mcauley-penney/tidy.nvim",
+    event = "VeryLazy",
+    config = {
+      filetype_exclude = { "markdown", "diff" },
+    },
+  },
+
+  -- Change Trouble config
   {
     "folke/trouble.nvim",
     -- opts will be merged with the parent spec
     opts = { use_diagnostic_signs = true },
   },
 
-  -- add zen-mode
+  -- Add Zen-mode
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -27,7 +46,7 @@ return {
     keys = { { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 
-  -- add symbols-outline
+  -- Add Symbols-outline
   {
     "simrat39/symbols-outline.nvim",
     cmd = "SymbolsOutline",

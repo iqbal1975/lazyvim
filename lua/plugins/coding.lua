@@ -36,28 +36,6 @@ return {
     end,
   },
 
-  -- scopes
-  {
-    "tiagovla/scope.nvim",
-    event = "VeryLazy",
-    config = true,
-  },
-
-  -- editor config support
-  {
-    "editorconfig/editorconfig-vim",
-    event = "VeryLazy",
-  },
-
-  -- tidy
-  {
-    "mcauley-penney/tidy.nvim",
-    event = "VeryLazy",
-    config = {
-      filetype_exclude = { "markdown", "diff" },
-    },
-  },
-
   -- treesitter
   {
     "nvim-treesitter/nvim-treesitter",
