@@ -23,10 +23,10 @@ return {
       -- colorscheme = "tokyonight",
       -- style = "night",
       -- Catppuccin Colorscheme
-      colorscheme = "catppuccin",
-      opts = nil,
+      -- colorscheme = "catppuccin",
+      -- opts = nil,
       -- Moonbow Colorscheme
-      -- colorscheme = "moonbow",
+      colorscheme = "moonbow",
     },
   },
 }
