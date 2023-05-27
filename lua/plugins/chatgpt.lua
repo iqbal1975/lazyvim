@@ -4,9 +4,9 @@ return {
     config = function()
       require("chatgpt").setup({
         -- optional configuration
-        keymaps = {
-          submit = "<C-a>",
-        },
+        -- keymaps = {
+        --   submit = "<C-a>",
+        -- },
       })
     end,
     dependencies = {

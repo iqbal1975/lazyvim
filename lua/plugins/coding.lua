@@ -48,7 +48,6 @@ return {
         "css",
         "diff",
         "go",
-        "help",
         "html",
         "java",
         "javascript",
@@ -64,6 +63,7 @@ return {
         "tsx",
         "typescript",
         "vim",
+        "vimdoc",
         "yaml",
       }
     end,

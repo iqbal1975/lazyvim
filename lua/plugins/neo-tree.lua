@@ -12,12 +12,6 @@ return {
       source_selector = {
         winbar = true,
         content_layout = "center",
-        tab_labels = {
-          filesystem = " File",
-          buffers = "➜ Buffs",
-          git_status = " Git",
-          diagnostics = "",
-        },
       },
       default_component_configs = {
         indent = {
