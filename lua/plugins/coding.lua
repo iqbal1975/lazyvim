@@ -3,9 +3,8 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      {
-        "hrsh7th/cmp-emoji",
-      },
+      { "hrsh7th/cmp-emoji" },
+      { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
       {
         "Saecki/crates.nvim",
         event = { "BufRead Cargo.toml" },
@@ -33,39 +32,6 @@ return {
         -- Set `select` to `false` to only confirm explicitly selected items.
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
       })
-    end,
-  },
-
-  -- treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      opts.ensure_installed = {
-        "bash",
-        "c",
-        "comment",
-        "cpp",
-        "css",
-        "diff",
-        "go",
-        "html",
-        "java",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "rust",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "vimdoc",
-        "yaml",
-      }
     end,
   },
 }

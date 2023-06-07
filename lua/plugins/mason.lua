@@ -8,6 +8,7 @@ return {
         "delve",
         "eslint_d",
         "flake8",
+        "js-debug-adapter",
         "prettier",
         "shellcheck",
         "shfmt",
