@@ -6,8 +6,9 @@ return {
   -- Catppuccin Colorscheme
   {
     "catppuccin/nvim",
-    lazy = true,
     name = "catppuccin",
+    priority = 1000,
+    lazy = true,
   },
 
   -- Moonbow Colorscheme
@@ -23,7 +24,7 @@ return {
       -- colorscheme = "tokyonight",
       -- style = "night",
       -- Catppuccin Colorscheme
-      colorscheme = "catppuccin",
+      colorscheme = "catppuccin-mocha",
       opts = nil,
       -- Moonbow Colorscheme
       -- colorscheme = "moonbow",

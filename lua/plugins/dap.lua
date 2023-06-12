@@ -1,6 +1,8 @@
 return {
   {
     "mfussenegger/nvim-dap",
+    "leoluz/nvim-dap-go",
+    "mfussenegger/nvim-dap-python",
     event = "VeryLazy",
     dependencies = {
       {

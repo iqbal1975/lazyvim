@@ -1,5 +1,6 @@
 return {
-  -- extend auto completion
+  "ChristianChiarulli/swenv.nvim",
+  -- Extend Auto Completion
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -33,5 +34,13 @@ return {
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
       })
     end,
+  },
+  keys = {
+    {
+      "<leader>Y",
+      "<cmd>lua require('swenv.api').pick_venv()<cr>",
+      "Choose Env",
+      desc = "Python",
+    },
   },
 }
