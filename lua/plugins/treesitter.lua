@@ -14,7 +14,6 @@ return {
         "gomod",
         "gosum",
         "gowork",
-        "html",
         "java",
         "javascript",
         "json",

@@ -4,7 +4,7 @@
 -- {{{ Alphabetical listing of settings I like.
 
 local options = {
-  colorcolumn = "80",
+  colorcolumn = "90",
   completeopt = { "menuone", "noinsert", "noselect" },
   listchars = { -- list of hidden characters
     tab = "» ",
