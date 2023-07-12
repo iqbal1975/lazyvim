@@ -23,16 +23,14 @@ return {
   {
     "mcauley-penney/tidy.nvim",
     event = "VeryLazy",
-    config = {
-      filetype_exclude = { "markdown", "diff" },
-    },
-  },
-
-  -- Change Trouble config
-  {
-    "folke/trouble.nvim",
-    -- opts will be merged with the parent spec
-    opts = { use_diagnostic_signs = true },
+    config = function()
+      require("tidy").setup({
+        filetype_exclude = { "markdown", "diff" },
+      })
+    end,
+    init = function()
+      vim.keymap.set("n", "<leader>y", require("tidy").toggle, { desc = "Toggle Tidy" })
+    end,
   },
 
   -- Add Zen-mode
