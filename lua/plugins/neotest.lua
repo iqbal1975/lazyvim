@@ -17,6 +17,8 @@ return {
       },
       ["neotest-plenary"] = {},
       ["neotest-python"] = {
+        -- Here you can specify the settings for the adapter, i.e.
+        -- python = ".venv/bin/python",
         dap = {
           justMyCode = false,
           console = "integratedTerminal",
