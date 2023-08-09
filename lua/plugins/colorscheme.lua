@@ -24,7 +24,7 @@ return {
       -- colorscheme = "tokyonight",
       -- style = "night",
       -- Catppuccin Colorscheme
-      colorscheme = "catppuccin-mocha",
+      colorscheme = "catppuccin",
       opts = nil,
       -- Moonbow Colorscheme
       -- colorscheme = "moonbow",
