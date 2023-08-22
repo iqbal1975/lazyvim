@@ -44,6 +44,12 @@ return {
     keys = { { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 
+  -- Vim Tmux Navigator
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
+
   -- Add Symbols-outline
   {
     "simrat39/symbols-outline.nvim",
