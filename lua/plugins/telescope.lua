@@ -1,17 +1,23 @@
 -- Customize Telescope
 return {
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      { "nvim-telescope/telescope-dap.nvim" },
-      { "nvim-telescope/telescope-file-browser.nvim" },
-      -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "nvim-telescope/telescope-project.nvim" },
-      { "debugloop/telescope-undo.nvim" },
-    },
-    -- change some options
-    opts = {
+  "nvim-telescope/telescope.nvim",
+  branch = "0.1.x",
+  dependencies = {
+    { "nvim-lua/plenary.nvim" },
+    { "nvim-telescope/telescope-dap.nvim" },
+    { "nvim-telescope/telescope-file-browser.nvim" },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    { "nvim-telescope/telescope-project.nvim" },
+    { "nvim-tree/nvim-web-devicons" },
+    { "debugloop/telescope-undo.nvim" },
+  },
+  config = function()
+    local telescope = require("telescope")
+    local actions = require("telescope.actions")
+
+    telescope.setup({
       defaults = {
+        path_display = { "truncate " },
         prompt_prefix = " ",
         selection_caret = " ",
         layout_strategy = "horizontal",
@@ -27,42 +33,43 @@ return {
               return require("trouble.providers.telescope").open_selected_with_trouble(...)
             end,
             ["<C-Down>"] = function(...)
-              return require("telescope.actions").cycle_history_next(...)
+              return actions.cycle_history_next(...)
             end,
             ["<C-Up>"] = function(...)
-              return require("telescope.actions").cycle_history_prev(...)
+              return actions.cycle_history_prev(...)
             end,
             ["<C-f>"] = function(...)
-              return require("telescope.actions").preview_scrolling_down(...)
+              return actions.preview_scrolling_down(...)
             end,
             ["<C-b>"] = function(...)
-              return require("telescope.actions").preview_scrolling_up(...)
+              return actions.preview_scrolling_up(...)
             end,
             ["<C-j>"] = function(...)
-              return require("telescope.actions").move_selection_next(...)
+              return actions.move_selection_next(...)
             end,
             ["<C-k>"] = function(...)
-              return require("telescope.actions").move_selection_previous(...)
+              return actions.move_selection_previous(...)
             end,
             ["<C-p>"] = function(...)
-              return require("telescope.actions.layout").toggle_preview(...)
+              return actions.layout.toggle_preview(...)
             end,
+            ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
           },
           n = {
             ["j"] = function(...)
-              return require("telescope.actions").move_selection_next(...)
+              return actions.move_selection_next(...)
             end,
             ["k"] = function(...)
-              return require("telescope.actions").move_selection_previous(...)
+              return actions.move_selection_previous(...)
             end,
             ["gg"] = function(...)
-              return require("telescope.actions").move_to_top(...)
+              return actions.move_to_top(...)
             end,
             ["G"] = function(...)
-              return require("telescope.actions").move_to_bottom(...)
+              return actions.move_to_bottom(...)
             end,
             ["<C-p>"] = function(...)
-              return require("telescope.actions.layout").toggle_preview(...)
+              return actions.layout.toggle_preview(...)
             end,
           },
         },
@@ -82,38 +89,48 @@ return {
           },
         },
       },
+    })
+
+    telescope.load_extension("dap")
+    telescope.load_extension("file_browser")
+    telescope.load_extension("fzf")
+    telescope.load_extension("project")
+    telescope.load_extension("undo")
+  end,
+
+  keys = {
+    -- Project Browser
+    {
+      "<leader>fP",
+      ":Telescope project display_type=full<CR>",
+      desc = "Find Project",
     },
-    keys = {
-      -- Project Browser
-      {
-        "<leader>fP",
-        ":Telescope project display_type=full<CR>",
-        desc = "Find Project",
-      },
-      -- add a keymap to browse plugin files
-      -- stylua: ignore
-      {
-        "<leader>fp",
-        function()
-          require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })
-        end,
-        desc = "Find Plugin File",
-      },
-      -- Telescope File Browser
-      {
-        "<leader>sB",
-        ":Telescope file_browser path=%:p:h=%:p:h<cr>",
-        desc = "Browse Files",
-      },
+    -- add a keymap to browse plugin files
+    -- stylua: ignore
+    {
+      "<leader>fp",
+      function()
+        require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })
+      end,
+      desc = "Find Plugin File",
     },
-    config = function(_, opts)
-      local telescope = require("telescope")
-      telescope.setup(opts)
-      telescope.load_extension("dap")
-      telescope.load_extension("file_browser")
-      -- telescope.load_extension("fzf")
-      telescope.load_extension("project")
-      telescope.load_extension("undo")
-    end,
+    -- Telescope File Browser
+    {
+      "<leader>sB",
+      ":Telescope file_browser path=%:p:h=%:p:h<cr>",
+      desc = "Browse Files",
+    },
+    -- Telescope Live Grep in cwd
+    {
+      "<leader>fs",
+      "<cmd>Telescope live_grep<cr>",
+      desc = "Find String in cwd",
+    },
+    -- Telescope Live Grep under Cursor
+    {
+      "<leader>fc",
+      "<cmd>Telescope grep_string<cr>",
+      desc = "Find String under Cursor in cwd",
+    },
   },
 }
