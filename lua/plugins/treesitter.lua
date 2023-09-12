@@ -1,63 +1,84 @@
 return {
-  -- treesitter
-  "nvim-treesitter/nvim-treesitter",
-  version = false, -- last release is way too old and doesn't work on Windows
-  build = ":TSUpdate",
-  event = { "BufReadPost", "BufNewFile" },
-  dependencies = {
-    {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-  },
-  cmd = { "TSUpdateSync" },
-  keys = {
-    { "<c-space>", desc = "Increment selection" },
-    { "<bs>", desc = "Decrement selection", mode = "x" },
-  },
-  opts = {
-    highlight = { enable = true },
-    indent = { enable = true },
-    ensure_installed = {
-      "bash",
-      "c",
-      "comment",
-      "cpp",
-      "css",
-      "diff",
-      "go",
-      "gomod",
-      "gosum",
-      "gowork",
-      "java",
-      "javascript",
-      "json",
-      "json5",
-      "jsonc",
-      "lua",
-      "markdown",
-      "markdown_inline",
-      "ninja",
-      "python",
-      "query",
-      "regex",
-      "ron",
-      "rst",
-      "rust",
-      "toml",
-      "tsx",
-      "typescript",
-      "vim",
-      "vimdoc",
-      "yaml",
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<C-space>",
-        node_incremental = "<C-space>",
-        scope_incremental = false,
-        node_decremental = "<bs>",
+  {
+    -- Configure Treesitter
+    "nvim-treesitter/nvim-treesitter",
+    version = false, -- last release is way too old and doesn't work on Windows
+    build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = {
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        "windwp/nvim-ts-autotag",
       },
+    },
+    cmd = { "TSUpdateSync" },
+    keys = {
+      { "<C-Space>", desc = "Increment selection" },
+      { "<bs>", desc = "Decrement selection", mode = "x" },
+    },
+    opts = {
+      -- enable syntax highlighting
+      highlight = { enable = true },
+
+      -- enable indentation
+      indent = { enable = true },
+
+      -- enable autotagging (w/ nvim-ts-autotag plugin)
+      autotag = { enable = true },
+
+      -- ensure these language parsers are installed
+      ensure_installed = {
+        "bash",
+        "c",
+        "comment",
+        "cpp",
+        "css",
+        "diff",
+        "go",
+        "gomod",
+        "gosum",
+        "gowork",
+        "java",
+        "javascript",
+        "json",
+        "json5",
+        "jsonc",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "ninja",
+        "python",
+        "query",
+        "regex",
+        "ron",
+        "rst",
+        "rust",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
+      },
+
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>",
+        },
+      },
+
+      -- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
+      context_commentstring = {
+        enable = true,
+        enable_autocmd = false,
+      },
+
+      -- auto install above language parsers
+      auto_install = true,
     },
   },
 }
