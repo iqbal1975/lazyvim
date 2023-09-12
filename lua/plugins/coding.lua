@@ -1,7 +1,7 @@
 return {
   "p00f/clangd_extensions.nvim",
   lazy = true,
-  config = function() end,
+  -- config = function() end,
   opts = {
     extensions = {
       inlay_hints = {
