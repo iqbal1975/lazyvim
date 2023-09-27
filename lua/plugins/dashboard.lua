@@ -1,11 +1,11 @@
 return {
   {
     "goolord/alpha-nvim",
-    enabled = false,
+    enabled = true,
   },
   {
     "glepnir/dashboard-nvim",
-    -- enabled = false,
+    enabled = false,
     event = "VimEnter",
     config = function()
       require("dashboard").setup({

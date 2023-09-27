@@ -18,6 +18,7 @@ local options = {
   showbreak = "↪",
   splitbelow = true,
   splitright = true,
+  statuscolumn = "%l %r",
   -- winbar = "%=%m %f"
 }
 
