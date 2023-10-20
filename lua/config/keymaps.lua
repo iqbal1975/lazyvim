@@ -72,22 +72,39 @@ wk.register({
 -- Harpoon Keymaps
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
+vim.keymap.set("n", "<C-A>", mark.add_file, { desc = "Harpoon Mark" })
+vim.keymap.set("n", "<C-E>", ui.toggle_quick_menu, { desc = "Harpoon Menu" })
 
-vim.keymap.set("n", "<leader>a", mark.add_file)
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-
-vim.keymap.set("n", "<C-1>", function()
-  ui.nav_file(1)
-end)
-vim.keymap.set("n", "<C-2>", function()
-  ui.nav_file(2)
-end)
-vim.keymap.set("n", "<C-3>", function()
-  ui.nav_file(3)
-end)
-vim.keymap.set("n", "<C-4>", function()
-  ui.nav_file(4)
-end)
+local hk = require("which-key")
+hk.register({
+  A = {
+    name = "Harpoon",
+    a = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Add File" },
+    r = { "<cmd>lua require('harpoon.mark').rm_file()<cr>", "Remove File" },
+    m = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Harpoon Menu" },
+    n = { "<cmd>lua require('harpoon.ui').nav_next()<cr>", "Next File" },
+    p = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>", "Previous File" },
+    ["1"] = { "<cmd> lua require('harpoon.ui').nav_file(1)<cr>", "File 1" },
+    ["2"] = { "<cmd> lua require('harpoon.ui').nav_file(2)<cr>", "File 2" },
+    ["3"] = { "<cmd> lua require('harpoon.ui').nav_file(3)<cr>", "File 3" },
+    ["4"] = { "<cmd> lua require('harpoon.ui').nav_file(4)<cr>", "File 4" },
+    ["5"] = { "<cmd> lua require('harpoon.ui').nav_file(5)<cr>", "File 5" },
+  },
+  H = {
+    name = "Help/Debug/Conceal",
+    c = {
+      name = "Conceal",
+      h = { ":set conceallevel=1<cr>", "Hide/Conceal" },
+      s = { ":set conceallevel=0<cr>", "Show/Unconceal" },
+    },
+    t = {
+      name = "Treesitter",
+      t = { vim.treesitter.inspect_tree, "Show Tree" },
+      c = { ":=vim.treesitter.get_captures_at_cursor()<cr>", "Show Capture" },
+      n = { ":=vim.treesitter.get_node():type()<cr>", "Show Node" },
+    },
+  },
+}, { prefix = "<leader>" })
 
 vim.cmd("highlight! HarpoonInactive guibg=NONE guifg=#63698c")
 vim.cmd("highlight! HarpoonActive guibg=NONE guifg=white")
@@ -105,37 +122,11 @@ vim.keymap.set(
 )
 -- Telescope Keymap
 
--- Zk Keymaps
--- Create a new note after asking for its title.
-vim.keymap.set(
-  "n",
-  "<leader>zn",
-  "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>",
-  { noremap = true, silent = false, desc = "Create New Note" }
-)
-
--- Open notes.
-vim.keymap.set(
-  "n",
-  "<leader>zo",
-  "<Cmd>ZkNotes { sort = { 'modified' } }<CR>",
-  { noremap = true, silent = false, desc = "Open Notes" }
-)
--- Open notes associated with the selected tags.
-vim.keymap.set("n", "<leader>zt", "<Cmd>ZkTags<CR>", { noremap = true, silent = false, desc = "Open Notes with Tags" })
-
--- Search for the notes matching a given query.
-vim.keymap.set(
-  "n",
-  "<leader>zf",
-  "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>",
-  { noremap = true, silent = false, desc = "Search Notes Matching" }
-)
--- Search for the notes matching the current visual selection.
-vim.keymap.set(
-  "v",
-  "<leader>zf",
-  ":'<,'>ZkMatch<CR>",
-  { noremap = true, silent = false, desc = "Search Notes Matching" }
-)
--- Zk Keymaps
+-- Zk Keymap
+local zk = require("which-key")
+zk.register({
+  z = {
+    name = "Zk Notes",
+  },
+}, { prefix = "<leader>" })
+-- Zk Keymap
