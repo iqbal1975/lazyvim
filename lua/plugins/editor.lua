@@ -6,11 +6,10 @@
 -- * override the configuration of LazyVim plugins
 return {
 
-  -- Scopes
+  -- Choose CONDA Environment
   {
-    "tiagovla/scope.nvim",
-    event = "VeryLazy",
-    config = true,
+    "kmontocam/nvim-conda",
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
 
   -- Editor config support
@@ -18,6 +17,42 @@ return {
     "editorconfig/editorconfig-vim",
     event = "VeryLazy",
   },
+
+  -- Join-Line Opposite
+  {
+    "AckslD/nvim-trevJ.lua",
+    config = 'require("trevj").setup()',
+    init = function()
+      vim.keymap.set("n", "<leader>j", function()
+        require("trevj").format_at_cursor()
+      end, { desc = "Join-Line Opposite" })
+    end,
+  },
+
+  -- Scopes
+  {
+    "tiagovla/scope.nvim",
+    event = "VeryLazy",
+    config = true,
+  },
+
+  -- Shebang
+  {
+    "susensio/magic-bang.nvim",
+    event = "BufNewFile",
+    cmd = "Bang",
+    config = function()
+      require("magic-bang").setup({
+        bin = {
+          py = "python",
+          scala = nil,
+        },
+      })
+    end,
+  },
+
+  -- Switch Python venv
+  { "ChristianChiarulli/swenv.nvim" },
 
   -- Tidy
   {
@@ -33,14 +68,25 @@ return {
     end,
   },
 
-  -- Add Zen-mode
+  -- Twilight
+  {
+    "folke/twilight.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
+
+  -- Zen-mode
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
     config = true,
-    dependencies = {
-      "folke/twilight.nvim",
-    },
+    -- dependencies = {
+    --   "folke/twilight.nvim",
+    -- },
     keys = { { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 
