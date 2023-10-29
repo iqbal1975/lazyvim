@@ -6,6 +6,12 @@
 -- * override the configuration of LazyVim plugins
 return {
 
+  -- Code Folding
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+  },
+
   -- Choose CONDA Environment
   {
     "kmontocam/nvim-conda",
