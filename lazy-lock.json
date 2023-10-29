@@ -92,7 +92,7 @@
   "promise-async": { "branch": "main", "commit": "e94f35161b8c5d4a4ca3b6ff93dd073eb9214c0e" },
   "refactoring.nvim": { "branch": "master", "commit": "5831194debd23920a32abd9fefd5dddba44e34fc" },
   "rust-tools.nvim": { "branch": "master", "commit": "0cc8adab23117783a0292a0c8a2fbed1005dc645" },
-  "scope.nvim": { "branch": "main", "commit": "01ce40fe7434fba9a122c01b4734479b3860609a" },
+  "scope.nvim": { "branch": "main", "commit": "cd27af77ad61a7199af5c28d27013fb956eb0e3e" },
   "sqlite.lua": { "branch": "master", "commit": "b7e28c8463254c46a8e61c52d27d6a2040492fc3" },
   "swenv.nvim": { "branch": "main", "commit": "87216f6ed7886a8cbd2b8fede1ccbdb2c91733c2" },
   "symbols-outline.nvim": { "branch": "master", "commit": "512791925d57a61c545bc303356e8a8f7869763c" },
