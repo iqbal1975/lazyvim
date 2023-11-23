@@ -1,4 +1,4 @@
-return{
+return {
   -- Extend Auto Completion
   "hrsh7th/nvim-cmp",
   version = false, -- last release is way too old
@@ -11,7 +11,7 @@ return{
       event = { "BufRead Cargo.toml" },
       config = true,
     },
-    { "hrsh7th/cmp-nvim-lsp", },
+    { "hrsh7th/cmp-nvim-lsp" },
     { "hrsh7th/cmp-buffer" }, -- source for text in buffer
     { "hrsh7th/cmp-path" }, -- source for file system paths
     { "L3MON4D3/LuaSnip" }, -- snippet engine
@@ -42,6 +42,7 @@ return{
 
       sources = {
         { name = "emoji" },
+        { name = "codeium" },
         { name = "crates" },
         { name = "nvim_lsp" },
         { name = "luasnip" }, -- snippets
@@ -74,6 +75,12 @@ return{
           if icons[item.kind] then
             item.kind = icons[item.kind] .. item.kind
           end
+          -- local codeium = require("lspkind").cmp_format({
+          --   mode = "symbol",
+          --   maxwidth = 50,
+          --   ellipsis_char = "...",
+          --   symbol_map = { Codeium = "" },
+          -- })
           return item
         end,
       },
