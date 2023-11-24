@@ -12,7 +12,7 @@ return {
     dependencies = "kevinhwang91/promise-async",
   },
 
-  -- Choose CONDA Environment
+  -- CONDA Environment
   {
     "kmontocam/nvim-conda",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -85,6 +85,17 @@ return {
     },
   },
 
+  -- Vim Tmux Navigator
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
+
+  -- Vim Tmux Navigator
+  {
+    "wakatime/vim-wakatime",
+  },
+
   -- Zen-mode
   {
     "folke/zen-mode.nvim",
@@ -94,12 +105,6 @@ return {
     --   "folke/twilight.nvim",
     -- },
     keys = { { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-  },
-
-  -- Vim Tmux Navigator
-  {
-    "christoomey/vim-tmux-navigator",
-    lazy = false,
   },
 
   -- Add Symbols-outline
