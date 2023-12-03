@@ -60,6 +60,15 @@ return {
   -- Switch Python venv
   { "ChristianChiarulli/swenv.nvim" },
 
+  -- Telescope Import
+  {
+    "piersolenski/telescope-import.nvim",
+    dependencies = "nvim-telescope/telescope.nvim",
+    config = function()
+      require("telescope").load_extension("import")
+    end,
+  },
+
   -- Tidy
   {
     "mcauley-penney/tidy.nvim",
@@ -94,6 +103,41 @@ return {
   -- Vim Tmux Navigator
   {
     "wakatime/vim-wakatime",
+  },
+
+  -- What the Fudge Diagnostic
+  {
+    "piersolenski/wtf.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {},
+    keys = {
+      {
+        "gw",
+        mode = { "n", "x" },
+        function()
+          require("wtf").ai()
+        end,
+        desc = "Debug diagnostic with AI",
+      },
+      {
+        mode = { "n" },
+        "gW",
+        function()
+          require("wtf").search()
+        end,
+        desc = "Search diagnostic with Google",
+      },
+    },
+    hooks = {
+      request_started = function()
+        vim.cmd("hi StatusLine ctermbg=NONE ctermfg=yellow")
+      end,
+      request_finished = vim.schedule_wrap(function()
+        vim.cmd("hi StatusLine ctermbg=NONE ctermfg=NONE")
+      end),
+    },
   },
 
   -- Zen-mode
