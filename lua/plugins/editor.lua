@@ -24,6 +24,17 @@ return {
     event = "VeryLazy",
   },
 
+  -- fzf-lua
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      -- calling `setup` is optional for customization
+      require("fzf-lua").setup({})
+    end,
+  },
+
   -- Join-Line Opposite
   {
     "AckslD/nvim-trevJ.lua",
