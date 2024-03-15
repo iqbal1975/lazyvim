@@ -14,12 +14,6 @@ return {
     { "hrsh7th/cmp-nvim-lsp" },
     { "hrsh7th/cmp-buffer" }, -- source for text in buffer
     { "hrsh7th/cmp-path" }, -- source for file system paths
-    {
-      "L3MON4D3/LuaSnip",
-      keys = function()
-        return {}
-      end,
-    }, -- snippet engine
     { "saadparwaiz1/cmp_luasnip" }, -- for autocompletion
     { "rafamadriz/friendly-snippets" }, -- useful snippets
     -- { "onsails/lspkind.nvim" }, -- vs-code like pictograms
@@ -46,18 +40,12 @@ return {
         completeopt = "menu,menuone,noinsert,noselect,preview",
       },
 
-      snippet = {
-        expand = function(args)
-          require("luasnip").lsp_expand(args.body)
-        end,
-      },
-
       sources = {
         { name = "emoji" },
         { name = "codeium" },
         { name = "crates" },
         { name = "nvim_lsp" },
-        { name = "luasnip" }, -- snippets
+        -- { name = "luasnip" }, -- snippets
         { name = "buffer" }, -- text within current buffer
         { name = "path" }, -- file system paths
       },
