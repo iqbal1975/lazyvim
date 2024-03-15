@@ -31,7 +31,7 @@ return {
     local cmp = require("cmp")
 
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-    require("luasnip.loaders.from_vscode").lazy_load()
+    -- require("luasnip.loaders.from_vscode").lazy_load()
 
     local defaults = require("cmp.config.default")()
     return {
