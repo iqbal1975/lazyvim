@@ -1,4 +1,4 @@
-return {
+return { -- Highlight, Edit, and Navigate Code
   {
     -- Configure Treesitter
     "nvim-treesitter/nvim-treesitter",
@@ -11,12 +11,20 @@ return {
         "windwp/nvim-ts-autotag",
       },
     },
+    {
+      "nvim-treesitter/nvim-treesitter-context",
+      enabled = true,
+      opts = { mode = "cursor", max_lines = 3 },
+    },
     cmd = { "TSUpdateSync" },
     keys = {
       { "<C-Space>", desc = "Increment selection" },
       { "<bs>", desc = "Decrement selection", mode = "x" },
     },
     opts = {
+      -- Autoinstall languages that are not installed
+      auto_install = true,
+
       -- enable syntax highlighting
       highlight = { enable = true },
 
@@ -58,7 +66,10 @@ return {
         "typescript",
         "vim",
         "vimdoc",
+        "xml",
         "yaml",
+        "hyprlang",
+        "rasi",
       },
 
       incremental_selection = {
@@ -76,9 +87,20 @@ return {
         enable = true,
         enable_autocmd = false,
       },
-
-      -- auto install above language parsers
-      auto_install = true,
     },
+    config = function(_, opts)
+      vim.filetype.add({
+        extension = { rasi = "rasi" },
+        pattern = {
+          [".*/waybar/config"] = "jsonc",
+          [".*/mako/config"] = "dosini",
+          [".*/kitty/*.conf"] = "bash",
+          [".*/hypr/.*%.conf"] = "hyprlang",
+        },
+      })
+
+      ---@diagnostic disable-next-line: missing-fields
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
 }
