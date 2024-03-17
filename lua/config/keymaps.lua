@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 
 -- Clear Search
-vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>", { noremap = true, silent = false, desc = "Clear Search" })
+vim.keymap.set("n", "<leader>S", ":nohlsearch<CR>", { noremap = true, silent = false, desc = "Clear Search" })
 -- Clear Search
 
 -- DAP Keymaps
