@@ -1,5 +1,6 @@
 return {
   { "nvim-neotest/neotest-go" },
+  { "nvim-neotest/nvim-nio" },
   { "nvim-neotest/neotest-plenary" },
   { "nvim-neotest/neotest-python" },
   { "rouge8/neotest-rust" },
