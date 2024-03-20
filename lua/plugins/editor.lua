@@ -35,6 +35,25 @@ return {
     end,
   },
 
+  -- Fugit2
+  {
+    "SuperBo/fugit2.nvim",
+    opts = {},
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "nvim-lua/plenary.nvim",
+      {
+        "chrisgrieser/nvim-tinygit",
+        dependencies = { "stevearc/dressing.nvim" },
+      },
+    },
+    cmd = { "Fugit2", "Fugit2Graph" },
+    keys = {
+      { "<leader>F", mode = "n", "<cmd>Fugit2<cr>", desc = "Fugit2" },
+    },
+  },
+
   -- Grapple (Immediate Navigation to Important Files)
   {
     "cbochs/grapple.nvim",
@@ -49,11 +68,11 @@ return {
       { "<leader>k", "<cmd>Grapple toggle_scopes<cr>", desc = "Grapple toggle scopes" },
       { "<leader>j", "<cmd>Grapple cycle forward<cr>", desc = "Grapple cycle forward" },
       { "<leader>J", "<cmd>Grapple cycle backward<cr>", desc = "Grapple cycle backward" },
-      { "<leader>F1", "<cmd>Grapple select index=1<cr>", desc = "Grapple select 1" },
-      { "<leader>F2", "<cmd>Grapple select index=2<cr>", desc = "Grapple select 2" },
-      { "<leader>F3", "<cmd>Grapple select index=3<cr>", desc = "Grapple select 3" },
-      { "<leader>F4", "<cmd>Grapple select index=4<cr>", desc = "Grapple select 4" },
-      { "<leader>F5", "<cmd>Grapple select index=5<cr>", desc = "Grapple select 5" },
+      { "<leader>6", "<cmd>Grapple select index=1<cr>", desc = "Grapple Select File 1" },
+      { "<leader>7", "<cmd>Grapple select index=2<cr>", desc = "Grapple Select File 2" },
+      { "<leader>8", "<cmd>Grapple select index=3<cr>", desc = "Grapple Select File 3" },
+      { "<leader>9", "<cmd>Grapple select index=4<cr>", desc = "Grapple Select File 4" },
+      { "<leader>0", "<cmd>Grapple select index=5<cr>", desc = "Grapple Select File 5" },
     },
   },
 
