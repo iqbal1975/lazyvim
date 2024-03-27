@@ -146,13 +146,7 @@ return {
     },
   },
 
-  -- Vim Tmux Navigator
-  {
-    "christoomey/vim-tmux-navigator",
-    lazy = false,
-  },
-
-  -- Vim Tmux Navigator
+  -- Vim Wakatime
   {
     "wakatime/vim-wakatime",
   },
