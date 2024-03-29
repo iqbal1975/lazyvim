@@ -1,4 +1,13 @@
 return {
+  --   { -- Trouble v2
+  --     "folke/trouble.nvim",
+  --     dependencies = { "nvim-tree/nvim-web-devicons" },
+  --     opts = { use_diagnostic_signs = true },
+  --     -- your configuration comes here
+  --     -- or leave it empty to use the default settings
+  --     -- refer to the configuration section below
+  --   },
+
   { -- Trouble v3
     "folke/trouble.nvim",
     branch = "dev", -- IMPORTANT!
@@ -48,6 +57,18 @@ return {
           zindex = 200,
         },
       },
+      cascade = {
+        mode = "diagnostics", -- inherit from diagnostics mode
+        filter = function(items)
+          local severity = vim.diagnostic.severity.HINT
+          for _, item in ipairs(items) do
+            severity = math.min(severity, item.severity)
+          end
+          return vim.tbl_filter(function(item)
+            return item.severity == severity
+          end, items)
+        end,
+      },
     },
     mydiags = {
       mode = "diagnostics", -- inherit from diagnostics mode
@@ -65,12 +86,4 @@ return {
       },
     },
   },
-  --   { -- Trouble v2
-  --     "folke/trouble.nvim",
-  --     dependencies = { "nvim-tree/nvim-web-devicons" },
-  --     opts = { use_diagnostic_signs = true },
-  --     -- your configuration comes here
-  --     -- or leave it empty to use the default settings
-  --     -- refer to the configuration section below
-  --   },
 }
