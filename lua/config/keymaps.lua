@@ -2,15 +2,18 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
--- Navigate vim panes better
-vim.keymap.set("n", "<C-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<C-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<C-l>", ":wincmd l<CR>")
+-- Clear Search
+-- vim.keymap.set("n", "<leader>S", ":nohlsearch<CR>", { noremap = true, silent = false, desc = "Clear Search" })
 
--- Clear Search
-vim.keymap.set("n", "<leader>S", ":nohlsearch<CR>", { noremap = true, silent = false, desc = "Clear Search" })
--- Clear Search
+-- Clear Search Highlights
+vim.keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear Search highlights" })
+
+-- Increment / Decrement numbers
+vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- Increment
+vim.keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- Decrement
+
+-- Make Split Windows Equal Width & Height
+vim.keymap.set("n", "<leader>=", "<C-w>=", { desc = "Make Splits Equal Size" })
 
 -- DAP Keymaps
 local dk = require("which-key")
