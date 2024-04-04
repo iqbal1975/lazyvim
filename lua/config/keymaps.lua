@@ -2,9 +2,6 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
--- Clear Search
--- vim.keymap.set("n", "<leader>S", ":nohlsearch<CR>", { noremap = true, silent = false, desc = "Clear Search" })
-
 -- Clear Search Highlights
 vim.keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear Search highlights" })
 
