@@ -11,6 +11,7 @@ return {
     lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
     version = "*", -- Pin Neorg to the latest stable release
     config = function()
+      local neorgPath = "~/Documents/Neorg"
       require("neorg").setup({
         -- put any of your previous config here
         load = {
@@ -26,9 +27,20 @@ return {
           ["core.dirman"] = { -- Manages Neorg workspaces
             config = {
               workspaces = {
-                work = "~/Neorg/work",
-                home = "~/Neorg/home",
+                work = neorgPath .. "/work",
+                home = neorgPath .. "/home",
               },
+              default_workspace = "home",
+            },
+          },
+          ["core.presenter"] = {
+            config = {
+              zen_mode = "zen-mode",
+            },
+          },
+          ["core.qol.todo_items"] = {
+            config = {
+              create_todo_parents = true,
             },
           },
         },
