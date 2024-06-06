@@ -1,16 +1,6 @@
 return {
-  --   { -- Trouble v2
-  --     "folke/trouble.nvim",
-  --     dependencies = { "nvim-tree/nvim-web-devicons" },
-  --     opts = { use_diagnostic_signs = true },
-  --     -- your configuration comes here
-  --     -- or leave it empty to use the default settings
-  --     -- refer to the configuration section below
-  --   },
-
   { -- Trouble v3
     "folke/trouble.nvim",
-    branch = "dev", -- IMPORTANT!
     keys = {
       {
         "<leader>xx",
