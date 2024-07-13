@@ -11,53 +11,36 @@ return {
     lazy = true,
   },
 
+  -- Gruvbox
+  {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = true,
+  },
+
   -- Moonbow Colorscheme
   { "arturgoms/moonbow.nvim" },
 
   -- OneNord Colorscheme
   { "rmehri01/onenord.nvim" },
 
+  -- Oxocarbon Colorscheme
+  { "nyoom-engineering/oxocarbon.nvim" },
+
   {
     "LazyVim/LazyVim",
     opts = {
+      -- Catppuccin Colorscheme
+      -- colorscheme = "catppuccin",
+      -- Gruvbox
+      colorscheme = "gruvbox",
+      -- Moonbow Colorscheme
+      -- colorscheme = "moonbow",
+      -- Oxocarbon Colorscheme
+      -- colorscheme = "oxocarbon",
       -- Tokyonight Colorscheme
       -- colorscheme = "tokyonight",
       -- style = "night",
-      -- Catppuccin Colorscheme
-      colorscheme = "catppuccin",
-      opts = {
-        integrations = {
-          alpha = true,
-          cmp = true,
-          flash = true,
-          gitsigns = true,
-          illuminate = true,
-          indent_blankline = { enabled = true },
-          lsp_trouble = true,
-          mason = true,
-          mini = true,
-          native_lsp = {
-            enabled = true,
-            underlines = {
-              errors = { "undercurl" },
-              hints = { "undercurl" },
-              warnings = { "undercurl" },
-              information = { "undercurl" },
-            },
-          },
-          navic = { enabled = true, custom_bg = "lualine" },
-          neotest = true,
-          noice = true,
-          notify = true,
-          neotree = true,
-          semantic_tokens = true,
-          telescope = true,
-          treesitter = true,
-          which_key = true,
-        },
-      },
-      -- Moonbow Colorscheme
-      -- colorscheme = "moonbow",
     },
   },
 }
