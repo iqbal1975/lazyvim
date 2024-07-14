@@ -13,21 +13,13 @@ vim.keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- Decr
 vim.keymap.set("n", "<leader>=", "<C-w>=", { desc = "Make Splits Equal Size" })
 
 -- DAP Keymaps
-local dk = require("which-key")
-dk.register({
-  D = {
-    name = "+DAP",
-    b = {
-      name = "+Breakpoints",
-    },
-    s = {
-      name = "+Steps",
-    },
-    v = {
-      name = "+Views",
-    },
-  },
-}, { prefix = "<leader>" })
+local wk = require("which-key")
+wk.add({
+  { "<leader>D", group = "DAP" },
+  { "<leader>Db", group = "Breakpoints" },
+  { "<leader>Ds", group = "Steps" },
+  { "<leader>Dv", group = "Views" },
+})
 
 local dap = require("dap")
 local breakpoints = require("dap.breakpoints")
@@ -106,141 +98,6 @@ vim.keymap.set("n", "<leader>Dvt", function()
 end, { desc = "Show Threads" })
 -- DAP Keymaps
 
--- Github Keymaps
-local wk = require("which-key")
-wk.register({
-  g = {
-    name = "+Git",
-    H = {
-      name = "+Github",
-      c = {
-        name = "+Commits",
-        c = { "<cmd>GHCloseCommit<cr>", "Close" },
-        e = { "<cmd>GHExpandCommit<cr>", "Expand" },
-        o = { "<cmd>GHOpenToCommit<cr>", "Open To" },
-        p = { "<cmd>GHPopOutCommit<cr>", "Pop Out" },
-        z = { "<cmd>GHCollapseCommit<cr>", "Collapse" },
-      },
-      i = {
-        name = "+Issues",
-        p = { "<cmd>GHPreviewIssue<cr>", "Preview" },
-      },
-      l = {
-        name = "+Litee",
-        t = { "<cmd>LTPanel<cr>", "Toggle Panel" },
-      },
-      r = {
-        name = "+Review",
-        b = { "<cmd>GHStartReview<cr>", "Begin" },
-        c = { "<cmd>GHCloseReview<cr>", "Close" },
-        d = { "<cmd>GHDeleteReview<cr>", "Delete" },
-        e = { "<cmd>GHExpandReview<cr>", "Expand" },
-        s = { "<cmd>GHSubmitReview<cr>", "Submit" },
-        z = { "<cmd>GHCollapseReview<cr>", "Collapse" },
-      },
-      p = {
-        name = "+Pull Request",
-        c = { "<cmd>GHClosePR<cr>", "Close" },
-        d = { "<cmd>GHPRDetails<cr>", "Details" },
-        e = { "<cmd>GHExpandPR<cr>", "Expand" },
-        o = { "<cmd>GHOpenPR<cr>", "Open" },
-        p = { "<cmd>GHPopOutPR<cr>", "PopOut" },
-        r = { "<cmd>GHRefreshPR<cr>", "Refresh" },
-        t = { "<cmd>GHOpenToPR<cr>", "Open To" },
-        z = { "<cmd>GHCollapsePR<cr>", "Collapse" },
-      },
-      t = {
-        name = "+Threads",
-        c = { "<cmd>GHCreateThread<cr>", "Create" },
-        n = { "<cmd>GHNextThread<cr>", "Next" },
-        t = { "<cmd>GHToggleThread<cr>", "Toggle" },
-      },
-    },
-  },
-}, { prefix = "<leader>" })
--- Github Keymaps
-
--- Refactoring Keymaps
-local rk = require("which-key")
-rk.register({
-  R = {
-    name = "+Refactoring",
-    b = {
-      name = "+Block",
-    },
-    e = {
-      name = "+Extract",
-    },
-    i = {
-      name = "+Inline",
-    },
-  },
-}, { prefix = "<leader>" })
-
-local refactor = require("refactoring")
-
--- Extract function supports only Visual mode
-vim.keymap.set("x", "<leader>Ree", function()
-  refactor.refactor("Extract Function")
-end, { desc = "V Extract Function" })
-vim.keymap.set("x", "<leader>Ref", function()
-  refactor.refactor("Extract Function To File")
-end, { desc = "V Extract Function to File" })
-
--- Extract variable supports only Visual mode
-vim.keymap.set("x", "<leader>Rev", function()
-  refactor.refactor("Extract Variable")
-end, { desc = "V Extract Variable" })
-
--- Inline func supports only Normal
-vim.keymap.set("n", "<leader>Rif", function()
-  refactor.refactor("Inline Function")
-end, { desc = "N Inline Function" })
-
--- Inline var supports both Normal and Visual mode
-vim.keymap.set({ "n", "x" }, "<leader>Riv", function()
-  refactor.refactor("Inline Variable")
-end, { desc = "N,X Inline Variable" })
-
--- Extract block supports only Normal mode
-vim.keymap.set("n", "<leader>Rbe", function()
-  refactor.refactor("Extract Block")
-end, { desc = "N Extract Block" })
-vim.keymap.set("n", "<leader>Rbf", function()
-  refactor.refactor("Extract Block To File")
-end, { desc = "N Extract Block to File" })
-
--- Prompt for a refactor to apply when the remap is triggered
-vim.keymap.set({ "n", "x" }, "<leader>Rn", function()
-  refactor.select_refactor()
-end, { desc = "N,X Refactoring using in-built Neovim" })
--- Note that not all refactor support both Normal and Visual mode
-
--- load refactoring Telescope extension
-require("telescope").load_extension("refactoring")
-
-vim.keymap.set({ "n", "x" }, "<leader>Rt", function()
-  require("telescope").extensions.refactoring.refactors()
-end, { desc = "N,X Refactoring using Telescope" })
-
--- You can also use below = true here to change the position of the printf
--- statement (or set two remaps for either one). This remap must be made in normal mode.
-vim.keymap.set("n", "<leader>Rp", function()
-  refactor.debug.printf({ below = false })
-end, { desc = "N Print Debug" })
-
--- Print Var
--- Supports both Normal and Visual mode
-vim.keymap.set({ "x", "n" }, "<leader>Rv", function()
-  require("refactoring").debug.print_var()
-end, { desc = "N,X Print Variable" })
-
--- Supports only Normal mode
-vim.keymap.set("n", "<leader>Rc", function()
-  refactor.debug.cleanup({})
-end, { desc = "N Clean Debug" })
--- Refactoring Keymaps
-
 -- Telescope Keymap
 vim.keymap.set(
   "n",
@@ -249,12 +106,3 @@ vim.keymap.set(
   { noremap = true, silent = true, desc = "Resume" }
 )
 -- Telescope Keymap
-
--- Zk Keymap
-local zk = require("which-key")
-zk.register({
-  z = {
-    name = "Zk Notes",
-  },
-}, { prefix = "<leader>" })
--- Zk Keymap

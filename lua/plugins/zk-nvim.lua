@@ -2,6 +2,11 @@ return {
   "mickael-menu/zk-nvim",
   config = function()
     require("zk").setup()
+
+    local wk = require("which-key")
+    wk.add({
+      { "<leader>z", group = "Zk Notes" },
+    })
   end,
 
   -- Zk Keymaps

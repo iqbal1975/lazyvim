@@ -21,12 +21,10 @@ return {
     })
 
     -- Auto-session Keymaps
-    local ask = require("which-key")
-    ask.register({
-      S = {
-        name = "+Session",
-      },
-    }, { prefix = "<leader>" })
+    local wk = require("which-key")
+    wk.add({
+      { "<leader>S", group = "Session" },
+    })
 
     local keymap = vim.keymap
 
