@@ -29,4 +29,8 @@ end
 
 vim.cmd([[filetype plugin indent on]])
 
+vim.filetype.add({
+  pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+})
+
 -- ------------------------------------------------------------------------- }}}
