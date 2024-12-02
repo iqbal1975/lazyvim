@@ -33,4 +33,18 @@ vim.filetype.add({
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
 
+vim.keymap.set("n", "gF", function()
+  local filepath = vim.fn.expand("<cfile>")
+  if vim.fn.filereadable(filepath) == 0 then
+    -- Create missing directories
+    vim.fn.mkdir(vim.fn.fnamemodify(filepath, ":h"), "p")
+    -- Create and open the file
+    vim.cmd("edit " .. filepath)
+    print("Created new file: " .. filepath)
+  else
+    -- Open the existing file
+    vim.cmd("edit " .. filepath)
+  end
+end, { desc = "Open or Create file under cursor with missing directories" })
+
 -- ------------------------------------------------------------------------- }}}
