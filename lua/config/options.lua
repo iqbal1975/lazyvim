@@ -5,6 +5,7 @@
 
 local options = {
   background = "dark", -- set this to dark or light
+  clipboard = "unnamedplus",
   colorcolumn = "120",
   completeopt = { "menuone", "noinsert", "noselect" },
   listchars = { -- list of hidden characters
