@@ -135,17 +135,6 @@ return {
     end,
   },
 
-  -- Twilight
-  {
-    "folke/twilight.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-  },
-
   -- Vim Wakatime
   {
     "wakatime/vim-wakatime",
@@ -191,9 +180,9 @@ return {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
     config = true,
-    -- dependencies = {
-    --   "folke/twilight.nvim",
-    -- },
+    dependencies = {
+      "folke/twilight.nvim",
+    },
     keys = { { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 }

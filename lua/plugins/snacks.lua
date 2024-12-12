@@ -35,7 +35,7 @@ return {
       },
     },
     debug = { enabled = true },
-    dim = { enabled = true },
+    -- dim = { enabled = true },
     gitbrowse = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
@@ -57,20 +57,6 @@ return {
     zen = { enabled = true },
   },
   keys = {
-    {
-      "<leader>Zz",
-      function()
-        Snacks.zen()
-      end,
-      desc = "Toggle Zen Mode",
-    },
-    {
-      "<leader>ZZ",
-      function()
-        Snacks.zen.zoom()
-      end,
-      desc = "Toggle Zoom",
-    },
     {
       "<leader>bS",
       function()
@@ -148,6 +134,21 @@ return {
           },
         })
       end,
+    },
+    -- { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
+    {
+      "<leader>Zz",
+      function()
+        Snacks.zen()
+      end,
+      desc = "Toggle Zen Mode",
+    },
+    {
+      "<leader>ZZ",
+      function()
+        Snacks.zen.zoom()
+      end,
+      desc = "Toggle Zoom",
     },
   },
   init = function()
