@@ -4,9 +4,7 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    animate = { enabled = true },
     bigfile = { enabled = true },
     dashboard = {
       sections = {
@@ -36,23 +34,43 @@ return {
         { section = "startup" },
       },
     },
+    debug = { enabled = true },
+    dim = { enabled = true },
     gitbrowse = { enabled = true },
+    indent = { enabled = true },
+    input = { enabled = true },
     lazygit = { enabled = true },
     notifier = {
       enabled = true,
       timeout = 3000,
     },
     quickfile = { enabled = true },
-    statuscolumn = { enabled = true },
-    words = { enabled = true },
     scratch = { enabled = true },
+    statuscolumn = { enabled = true },
     styles = {
       notification = {
         wo = { wrap = true }, -- Wrap notifications
       },
     },
+    toggle = { enabled = true },
+    words = { enabled = true },
+    zen = { enabled = true },
   },
   keys = {
+    {
+      "<leader>Zz",
+      function()
+        Snacks.zen()
+      end,
+      desc = "Toggle Zen Mode",
+    },
+    {
+      "<leader>ZZ",
+      function()
+        Snacks.zen.zoom()
+      end,
+      desc = "Toggle Zoom",
+    },
     {
       "<leader>bS",
       function()
@@ -60,6 +78,7 @@ return {
       end,
       desc = "Select Scratch Buffer",
     },
+    -- { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     -- { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
     -- { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     -- { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
