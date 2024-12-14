@@ -35,7 +35,7 @@ return {
       },
     },
     debug = { enabled = true },
-    -- dim = { enabled = true },
+    dim = { enabled = true },
     gitbrowse = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
@@ -45,7 +45,9 @@ return {
       timeout = 3000,
     },
     quickfile = { enabled = true },
+    scope = { enabled = true },
     scratch = { enabled = true },
+    -- scroll = { enabled = true },
     statuscolumn = { enabled = true },
     styles = {
       notification = {
@@ -64,10 +66,6 @@ return {
       end,
       desc = "Select Scratch Buffer",
     },
-    -- { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
-    -- { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
-    -- { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-    -- { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
     {
       "<leader>r",
       function()
@@ -75,8 +73,6 @@ return {
       end,
       desc = "Rename File",
     },
-    -- { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
-    -- { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
     {
       "<leader>gf",
       function()
@@ -92,8 +88,6 @@ return {
       end,
       desc = "Lazygit Log (cwd)",
     },
-    -- { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
-    -- { "<c-/>",      function() Snacks.terminal() end, desc = "Toggle Terminal" },
     {
       "<c-_>",
       function()
@@ -134,21 +128,6 @@ return {
           },
         })
       end,
-    },
-    -- { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
-    {
-      "<leader>Zz",
-      function()
-        Snacks.zen()
-      end,
-      desc = "Toggle Zen Mode",
-    },
-    {
-      "<leader>ZZ",
-      function()
-        Snacks.zen.zoom()
-      end,
-      desc = "Toggle Zoom",
     },
   },
   init = function()

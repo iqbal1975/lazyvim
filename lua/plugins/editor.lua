@@ -174,15 +174,4 @@ return {
       end),
     },
   },
-
-  -- Zen-mode
-  {
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    config = true,
-    dependencies = {
-      "folke/twilight.nvim",
-    },
-    keys = { { "<leader>Z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-  },
 }
