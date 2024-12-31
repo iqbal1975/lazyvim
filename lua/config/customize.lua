@@ -98,7 +98,7 @@ Customize = {
   -- {{{ Debug Adapter Protocol (DAP) debuggers
 
   debuggers = {
-    ["bash"] = { enabled = false },
+    ["bash"] = { enabled = true },
     ["dart"] = { enabled = false },
     ["go"] = { enabled = true },
     ["haskell"] = { enabled = false },
@@ -111,35 +111,5 @@ Customize = {
 
   -- ------------------------------------------------------------------------- }}}
 }
--- {{{ Toggle terminals
-
--- Customize.toggleterm = {
---
---   float = function()
---     local Terminal = require("toggleterm.terminal").Terminal
---     local t = Terminal:new({ direction = "float" })
---     return t:toggle()
---   end,
---
---   lazygit = function()
---     local Terminal = require("toggleterm.terminal").Terminal
---     local t = Terminal:new({ cmd = "lazygit", direction = "float" })
---     return t:toggle()
---   end,
---
---   neomutt = function()
---     local Terminal = require("toggleterm.terminal").Terminal
---     local t = Terminal:new({ cmd = "neomutt", direction = "float" })
---     return t:toggle()
---   end,
---
---   ranger = function()
---     local Terminal = require("toggleterm.terminal").Terminal
---     local t = Terminal:new({ cmd = "ranger", direction = "float" })
---     return t:toggle()
---   end,
--- }
-
--- ------------------------------------------------------------------------- }}}
 
 return Customize
