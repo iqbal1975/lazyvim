@@ -24,17 +24,6 @@ return {
     event = "VeryLazy",
   },
 
-  -- fzf-lua
-  {
-    "ibhagwan/fzf-lua",
-    -- optional for icon support
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      -- calling `setup` is optional for customization
-      require("fzf-lua").setup({})
-    end,
-  },
-
   -- Fugit2
   {
     "SuperBo/fugit2.nvim",

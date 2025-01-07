@@ -25,7 +25,8 @@ return {
 					-- When linking markdown notes, I would get snippets and text in the
 					-- suggestions, I want those to show only if there are no LSP
 					-- suggestions
-					fallbacks = { "snippets", "luasnip", "buffer" },
+					-- Disabling fallbacks as my snippets woudlnt show up
+					-- fallbacks = { "luasnip", "buffer" },
 					score_offset = 90, -- the higher the number, the higher the priority
 				},
 				luasnip = {
@@ -47,9 +48,7 @@ return {
 					end,
 					-- After accepting the completion, delete the trigger_text characters
 					-- from the final inserted text
-					transform_items = function(ctx, items)
-						-- WARNING: Explicitly referencing ctx otherwise I was getting an "unused" warning
-						local _ = ctx
+					transform_items = function(_, items)
 						local col = vim.api.nvim_win_get_cursor(0)[2]
 						local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
 						local trigger_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
@@ -80,7 +79,7 @@ return {
 					-- When typing a path, I would get snippets and text in the
 					-- suggestions, I want those to show only if there are no path
 					-- suggestions
-					fallbacks = { "snippets", "luasnip", "buffer" },
+					fallbacks = { "luasnip", "buffer" },
 					opts = {
 						trailing_slash = false,
 						label_trailing_slash = true,
