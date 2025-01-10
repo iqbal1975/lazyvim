@@ -297,6 +297,13 @@ return {
           "0:00 -",
           "```",
           "",
+          "```txt",
+          "Members only discord -> https://www.youtube.com/channel/UCrSIvbFncPSlK6AdwE2QboA/join",
+          "☕ Support me -> https://ko-fi.com/linkarzu",
+          "☑ My Twitter -> https://x.com/link_arzu",
+          "❤‍🔥 My tiktok -> https://www.tiktok.com/@linkarzu",
+          "```",
+          "",
         }),
       })
     )
@@ -346,40 +353,40 @@ return {
 
     ls.add_snippets("markdown", snippets)
 
-    -- Path to the text file containing video snippets
-    local snippets_file = vim.fn.expand("~/github/obsidian_main/300-youtube/youtube-video-list.txt")
-    local video_snippets = load_snippets_from_file(snippets_file)
-    -- Add the youtube videos snippets to the "all" filetype
-    ls.add_snippets("markdown", video_snippets)
-
-    -- #####################################################################
-    --                         all the filetypes
-    -- #####################################################################
-    ls.add_snippets("all", {
-      s({
-        trig = "workflow",
-        name = "Add this -> lamw25wmal",
-        desc = "Add this -> lamw25wmal",
-      }, {
-        t("lamw25wmal"),
-      }),
-
-      s({
-        trig = "lam",
-        name = "Add this -> lamw25wmal",
-        desc = "Add this -> lamw25wmal",
-      }, {
-        t("lamw25wmal"),
-      }),
-
-      s({
-        trig = "mw25",
-        name = "Add this -> lamw25wmal",
-        desc = "Add this -> lamw25wmal",
-      }, {
-        t("lamw25wmal"),
-      }),
-    })
+    -- -- Path to the text file containing video snippets
+    -- local snippets_file = vim.fn.expand("~/github/obsidian_main/300-youtube/youtube-video-list.txt")
+    -- local video_snippets = load_snippets_from_file(snippets_file)
+    -- -- Add the youtube videos snippets to the "all" filetype
+    -- ls.add_snippets("markdown", video_snippets)
+    --
+    -- -- #####################################################################
+    -- --                         all the filetypes
+    -- -- #####################################################################
+    -- ls.add_snippets("all", {
+    --   s({
+    --     trig = "workflow",
+    --     name = "Add this -> lamw25wmal",
+    --     desc = "Add this -> lamw25wmal",
+    --   }, {
+    --     t("lamw25wmal"),
+    --   }),
+    --
+    --   s({
+    --     trig = "lam",
+    --     name = "Add this -> lamw25wmal",
+    --     desc = "Add this -> lamw25wmal",
+    --   }, {
+    --     t("lamw25wmal"),
+    --   }),
+    --
+    --   s({
+    --     trig = "mw25",
+    --     name = "Add this -> lamw25wmal",
+    --     desc = "Add this -> lamw25wmal",
+    --   }, {
+    --     t("lamw25wmal"),
+    --   }),
+    -- })
 
     return opts
   end,
