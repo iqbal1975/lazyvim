@@ -13,11 +13,11 @@ return {
       },
       namespace = "All",
       namespace_fallback = {}, -- If you have limited access you can list all the namespaces here
-      notifications = {
-        enabled = true,
-        verbose = false,
-        blend = 100,
-      },
+      -- notifications = {
+      --   enabled = true,
+      --   verbose = false,
+      --   blend = 100,
+      -- },
       hints = true,
       context = true,
       float_size = {

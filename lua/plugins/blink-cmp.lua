@@ -20,6 +20,20 @@ return {
     "Kaiser-Yang/blink-cmp-dictionary",
   },
   opts = function(_, opts)
+    -- I noticed that telescope was extremeley slow and taking too long to open,
+    -- assumed related to blink, so disabled blink and in fact it was related
+    -- :lua print(vim.bo[0].filetype)
+    -- So I'm disabling blink.cmp for Telescope
+    opts.enabled = function()
+      -- Get the current buffer's filetype
+      local filetype = vim.bo[0].filetype
+      -- Disable for Telescope buffers
+      if filetype == "TelescopePrompt" or filetype == "minifiles" then
+        return false
+      end
+      return true
+    end
+
     -- NOTE: The new way to enable LuaSnip
     -- Merge custom sources with the existing ones from lazyvim
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
@@ -34,9 +48,11 @@ return {
           -- When linking markdown notes, I would get snippets and text in the
           -- suggestions, I want those to show only if there are no LSP
           -- suggestions
-          -- Disabling fallbacks as my snippets wouldn't show up
+          --
           -- Enabled fallbacks as this seems to be working now
-          fallbacks = { "snippets", "buffer" },
+          -- Disabling fallbacks as my snippets wouldn't show up when editing
+          -- lua files
+          -- fallbacks = { "snippets", "buffer" },
           score_offset = 90, -- the higher the number, the higher the priority
         },
         path = {
@@ -122,37 +138,38 @@ return {
         },
         -- https://github.com/Kaiser-Yang/blink-cmp-dictionary
         -- In macOS to get started with a dictionary:
-        -- cp /usr/share/dict/words ~/github/dotfiles-latest/dictionaries
+        -- cp /usr/share/dict/words ~/github/dotfiles-latest/dictionaries/words.txt
+        --
+        -- NOTE: For the word definitions make sure "wn" is installed
+        -- brew install wordnet
         dictionary = {
           module = "blink-cmp-dictionary",
           name = "Dict",
           score_offset = 20, -- the higher the number, the higher the priority
+          -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
           enabled = true,
           max_items = 8,
           min_keyword_length = 3,
           opts = {
-            get_command = {
-              "rg", -- make sure this command is available in your system
-              "--color=never",
-              "--no-line-number",
-              "--no-messages",
-              "--no-filename",
-              "--ignore-case",
-              "--",
-              "${prefix}", -- this will be replaced by the result of 'get_prefix' function
-              vim.fn.expand("~/apps/dictionaries/words"), -- where you dictionary is
-            },
-            documentation = {
-              enable = true, -- enable documentation to show the definition of the word
-              get_command = {
-                -- For the word definitions feature
-                -- make sure "wn" is available in your system
-                -- brew install wordnet
-                "wn",
-                "${word}", -- this will be replaced by the word to search
-                "-over",
-              },
-            },
+            -- -- The dictionary by default now uses fzf, make sure to have it
+            -- -- installed
+            -- -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
+            --
+            -- Do not specify a file, just the path, and in the path you need to
+            -- have your .txt files
+            dictionary_directories = { vim.fn.expand("~/apps/dictionaries") },
+            -- --  NOTE: To disable the definitions uncomment this section below
+            -- separate_output = function(output)
+            --   local items = {}
+            --   for line in output:gmatch("[^\r\n]+") do
+            --     table.insert(items, {
+            --       label = line,
+            --       insert_text = line,
+            --       documentation = nil,
+            --     })
+            --   end
+            --   return items
+            -- end,
           },
         },
         -- Third class citizen mf always talking shit
