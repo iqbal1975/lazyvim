@@ -1,5 +1,7 @@
 local icons = require("lib.icons")
 
+vim.ui.select = "Snacks.picker.select"
+
 return {
   "folke/snacks.nvim",
   lazy = false,
@@ -74,17 +76,14 @@ return {
     input = { enabled = true },
     lazygit = { enabled = true },
     notifier = { enabled = true },
-    picker = {
-      enabled = true,
-      ui_select = true,
-    },
+    picker = { enabled = true },
     profiler = { enabled = true },
     quickfile = { enabled = true },
     rename = { enabled = true },
     scope = { enabled = true },
     scratch = { enabled = true },
     scroll = { enabled = false },
-    statuscolumn = { enabled = true },
+    statuscolumn = { enabled = false },
     styles = {
       notification = {
         wo = { wrap = true }, -- Wrap notifications
@@ -421,9 +420,18 @@ return {
     {
       "<leader>ss",
       function()
-        Snacks.picker.lsp_symbols()
+        Snacks.picker.lsp_symbols({ filter = LazyVim.config.kind_filter })
       end,
       desc = "LSP Symbols",
+      has = "documentSymbol",
+    },
+    {
+      "<leader>sS",
+      function()
+        Snacks.picker.lsp_workspace_symbols({ filter = LazyVim.config.kind_filter })
+      end,
+      desc = "LSP Workspace Symbols",
+      has = "workspace/symbols",
     },
   },
   reverse = true,

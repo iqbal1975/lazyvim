@@ -76,13 +76,6 @@ return {
     end,
   },
 
-  -- Scopes
-  {
-    "tiagovla/scope.nvim",
-    event = "VeryLazy",
-    config = true,
-  },
-
   -- Shebang
   {
     "susensio/magic-bang.nvim",
