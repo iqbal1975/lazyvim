@@ -1,11 +1,22 @@
+local icons = require("lib.icons")
+
 return {
   "folke/snacks.nvim",
-  priority = 1000,
   lazy = false,
+  priority = 1000,
   ---@type snacks.Config
   opts = {
-    animate = { enabled = true },
-    bigfile = { enabled = true },
+    animate = {
+      enabled = true,
+      duration = 20, -- ms per step
+      easing = "linear",
+      fps = 60,
+    },
+    bigfile = {
+      enabled = true,
+      notify = true,
+    },
+    bufdelete = { enabled = true },
     dashboard = {
       sections = {
         { section = "header" },
@@ -35,20 +46,44 @@ return {
       },
     },
     debug = { enabled = true },
-    dim = { enabled = true },
+    dim = {
+      enabled = true,
+      scope = {
+        min_size = 5,
+        max_size = 30,
+        siblings = true,
+      },
+    },
+    git = { enabled = true },
     gitbrowse = { enabled = true },
-    indent = { enabled = true },
+    indent = {
+      enabled = true,
+      priority = 1,
+      char = icons.ui.SeparatorLight,
+      only_scope = false,
+      only_current = false,
+      hl = {
+        "SnacksIndent1",
+        "SnacksIndent2",
+        "SnacksIndent3",
+        "SnacksIndent4",
+        "SnacksIndent5",
+        "SnacksIndent6",
+      },
+    },
     input = { enabled = true },
     lazygit = { enabled = true },
-    notifier = {
+    notifier = { enabled = true },
+    picker = {
       enabled = true,
-      timeout = 3000,
+      ui_select = true,
     },
-    picker = { enabled = true },
+    profiler = { enabled = true },
     quickfile = { enabled = true },
+    rename = { enabled = true },
     scope = { enabled = true },
     scratch = { enabled = true },
-    -- scroll = { enabled = true },
+    scroll = { enabled = false },
     statuscolumn = { enabled = true },
     styles = {
       notification = {
@@ -57,6 +92,7 @@ return {
     },
     toggle = { enabled = true },
     words = { enabled = true },
+    win = { enabled = true },
     zen = { enabled = true },
   },
   keys = {
