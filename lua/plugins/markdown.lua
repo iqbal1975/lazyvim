@@ -41,6 +41,7 @@ return {
           conceal = false,
         },
       },
+      latex = { enabled = false },
       heading = {
         sign = false,
         icons = { "󰎤 ", "󰎧 ", "󰎪 ", "󰎭 ", "󰎱 ", "󰎳 " },

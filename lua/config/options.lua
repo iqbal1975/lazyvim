@@ -48,4 +48,8 @@ vim.keymap.set("n", "gF", function()
   end
 end, { desc = "Open or Create file under cursor with missing directories" })
 
+-- Snacks Options
+vim.ui.input = "Snacks.input"
+vim.ui.select = "Snacks.picker.select"
+
 -- ------------------------------------------------------------------------- }}}

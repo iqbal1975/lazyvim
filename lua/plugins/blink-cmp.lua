@@ -83,7 +83,7 @@ return {
         snippets = {
           name = "snippets",
           enabled = true,
-          max_items = 8,
+          max_items = 5,
           min_keyword_length = 2,
           module = "blink.cmp.sources.snippets",
           score_offset = 85, -- the higher the number, the higher the priority
@@ -158,6 +158,10 @@ return {
             -- Do not specify a file, just the path, and in the path you need to
             -- have your .txt files
             dictionary_directories = { vim.fn.expand("~/apps/dictionaries") },
+            -- Notice I'm also adding the words I add to the spell dictionary
+            dictionary_files = {
+              vim.fn.expand("~/apps/dictionaries/en.utf-8.add"),
+            },
             -- --  NOTE: To disable the definitions uncomment this section below
             -- separate_output = function(output)
             --   local items = {}
