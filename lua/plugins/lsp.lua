@@ -259,6 +259,12 @@ return {
       },
     })
 
+    -- configure marksman server
+    lspconfig["marksman"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- configure prisma orm server
     lspconfig["prismals"].setup({
       capabilities = capabilities,

@@ -60,5 +60,10 @@ return {
     ft = { "markdown" },
   },
 
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+  },
+
   "preservim/vim-pencil",
 }
