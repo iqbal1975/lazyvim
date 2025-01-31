@@ -54,6 +54,10 @@ return {
         siblings = true,
       },
     },
+    explorer = {
+      enabled = true,
+      replace_netrw = true, -- Replace netrw with the snacks explorer
+    },
     git = { enabled = true },
     gitbrowse = { enabled = true },
     indent = {
@@ -72,9 +76,19 @@ return {
       },
     },
     input = { enabled = true },
+    layout = { enabled = false },
     lazygit = { enabled = true },
     notifier = { enabled = true },
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+      sources = {
+        explorer = {
+          -- your explorer picker configuration comes here
+          -- or leave it empty to use the default settings
+          -- focus = "input",
+        },
+      },
+    },
     profiler = { enabled = true },
     quickfile = { enabled = true },
     rename = { enabled = true },
