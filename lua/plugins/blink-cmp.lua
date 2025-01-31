@@ -16,9 +16,21 @@ return {
   -- https://github.com/Saghen/blink.cmp/releases
   -- version = "v0.9.3",
   dependencies = {
-    "moyiz/blink-emoji.nvim",
     "Kaiser-Yang/blink-cmp-dictionary",
+    "moyiz/blink-emoji.nvim",
+    "rafamadriz/friendly-snippets",
   },
+
+  -- use a release tag to download pre-built binaries
+  version = "*",
+  -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+  -- build = 'cargo build --release',
+  -- If you use nix, you can build from source using latest nightly rust with:
+  -- build = 'nix run .#build-plugin',
+
+  ---@module 'blink.cmp'
+  ---@type blink.cmp.Config
+
   opts = function(_, opts)
     -- I noticed that telescope was extremeley slow and taking too long to open,
     -- assumed related to blink, so disabled blink and in fact it was related
@@ -33,6 +45,16 @@ return {
       end
       return true
     end
+
+    opts.appearance = {
+      -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+      -- Useful for when your theme doesn't support blink.cmp
+      -- Will be removed in a future release
+      use_nvim_cmp_as_default = true,
+      -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+      -- Adjusts spacing to ensure icons are aligned
+      nerd_font_variant = "mono",
+    }
 
     -- NOTE: The new way to enable LuaSnip
     -- Merge custom sources with the existing ones from lazyvim
@@ -222,15 +244,6 @@ return {
         enabled = true,
       },
     }
-
-    -- opts.fuzzy = {
-    --   -- Disabling this matches the behavior of fzf
-    --   use_typo_resistance = false,
-    --   -- Frecency tracks the most recently/frequently used items and boosts the score of the item
-    --   use_frecency = true,
-    --   -- Proximity bonus boosts the score of items matching nearby words
-    --   use_proximity = false,
-    -- }
 
     opts.snippets = {
       preset = "luasnip",

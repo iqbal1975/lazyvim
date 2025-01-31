@@ -7,6 +7,7 @@
 
 return {
   "L3MON4D3/LuaSnip",
+  dependencies = { "rafamadriz/friendly-snippets" },
   enabled = true,
   opts = function(_, opts)
     local ls = require("luasnip")
@@ -229,7 +230,10 @@ return {
         t({
           "",
           "",
-          "```bash",
+          "```txt",
+          "Members only discord",
+          "https://www.youtube.com/channel/UCrSIvbFncPSlK6AdwE2QboA/join",
+          "",
           "If you find this video helpful and want to support me",
           "https://ko-fi.com/linkarzu",
           "",
@@ -249,7 +253,7 @@ return {
           "",
           "Video timeline:",
           "",
-          "```bash",
+          "```txt",
           "0:00 -",
           "```",
           "",

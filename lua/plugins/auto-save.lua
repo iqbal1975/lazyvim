@@ -28,7 +28,10 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- I got this from https://github.com/okuuva/auto-save.nvim/issues/67#issuecomment-2597631756
+-- I do not want to save when I'm in visual mode because I'm usually moving
+-- stuff from one place to another, or deleting it
+-- I got this suggestion from the plugin maintainers
+-- https://github.com/okuuva/auto-save.nvim/issues/67#issuecomment-2597631756
 local visual_event_group = vim.api.nvim_create_augroup("visual_event", { clear = true })
 
 vim.api.nvim_create_autocmd("ModeChanged", {
@@ -64,10 +67,17 @@ return {
         -- -- Re-enabling this to only save if NOT in insert mode in the condition below
         -- immediate_save = { nil },
         immediate_save = { "BufLeave", "FocusLost", "QuitPre", "VimSuspend" }, -- vim events that trigger an immediate save
-        defer_save = { "InsertLeave", "TextChanged", { "User", pattern = "VisualLeave" } }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
+        -- vim events that trigger a deferred save (saves after `debounce_delay`)
+        defer_save = {
+          "InsertLeave",
+          "TextChanged",
+          { "User", pattern = "VisualLeave" },
+          -- { "User", pattern = "FlashJumpEnd" },
+        },
         cancel_deferred_save = {
           "InsertEnter",
           { "User", pattern = "VisualEnter" },
+          -- { "User", pattern = "FlashJumpStart" },
         },
       },
       -- function that takes the buffer handle and determines whether to save the current buffer or not
