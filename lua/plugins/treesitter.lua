@@ -65,6 +65,7 @@ return { -- Highlight, Edit, and Navigate Code
         "gosum",
         "gowork",
         "html",
+        "hurl",
         "java",
         "javascript",
         "jsdoc",
