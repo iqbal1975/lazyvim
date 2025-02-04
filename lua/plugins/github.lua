@@ -2,6 +2,7 @@ return {
 
   {
     "ldelossa/gh.nvim",
+    enabled = false,
     dependencies = {
       {
         "ldelossa/litee.nvim",
@@ -69,6 +70,7 @@ return {
 
   {
     "pwntester/octo.nvim",
+    enabled = false,
     cmd = "Octo",
     dependencies = {
       "nvim-lua/plenary.nvim",

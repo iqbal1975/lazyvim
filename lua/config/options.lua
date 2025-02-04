@@ -51,5 +51,6 @@ end, { desc = "Open or Create file under cursor with missing directories" })
 -- Snacks Options
 vim.ui.input = "Snacks.input"
 vim.ui.select = "Snacks.picker.select"
+-- vim.g.lazyvim_picker = "snacks"
 
 -- ------------------------------------------------------------------------- }}}

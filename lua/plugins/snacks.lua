@@ -1,5 +1,3 @@
-local icons = require("lib.icons")
-
 return {
   "folke/snacks.nvim",
   lazy = false,
@@ -60,25 +58,14 @@ return {
     },
     git = { enabled = true },
     gitbrowse = { enabled = true },
-    indent = {
-      enabled = true,
-      priority = 1,
-      char = icons.ui.SeparatorLight,
-      only_scope = false,
-      only_current = false,
-      hl = {
-        "SnacksIndent1",
-        "SnacksIndent2",
-        "SnacksIndent3",
-        "SnacksIndent4",
-        "SnacksIndent5",
-        "SnacksIndent6",
-      },
-    },
+    indent = { enabled = true },
     input = { enabled = true },
-    layout = { enabled = false },
+    layout = { enabled = true },
     lazygit = { enabled = true },
-    notifier = { enabled = true },
+    notifier = {
+      enabled = true,
+      top_down = true, -- place notifications from top to bottom
+    },
     picker = {
       enabled = true,
       sources = {
@@ -88,6 +75,100 @@ return {
           -- focus = "input",
         },
       },
+      -- My ~/github/dotfiles-latest/neovim/lazyvim/lua/config/keymaps.lua
+      -- file was always showing at the top, I needed a way to decrease its
+      -- score, in frecency you could use :FrecencyDelete to delete a file
+      -- from the database, here you can decrease it's score
+      transform = function(item)
+        if not item.file then
+          return item
+        end
+        -- Demote the "lazyvim" keymaps file:
+        if item.file:match("lazyvim/lua/config/keymaps%.lua") then
+          item.score_add = (item.score_add or 0) - 30
+        end
+        -- Boost the "neobean" keymaps file:
+        -- if item.file:match("neobean/lua/config/keymaps%.lua") then
+        --   item.score_add = (item.score_add or 0) + 100
+        -- end
+        return item
+      end,
+      -- In case you want to make sure that the score manipulation above works
+      -- or if you want to check the score of each file
+      -- debug = {
+      --   scores = true, -- show scores in the list
+      -- },
+      -- I like the "ivy" layout, so I set it as the default globaly, you can
+      -- still override it in different keymaps
+      layout = {
+        preset = "ivy",
+        -- When reaching the bottom of the results in the picker, I don't want
+        -- it to cycle and go back to the top
+        cycle = false,
+      },
+      layouts = {
+        -- I wanted to modify the ivy layout height and preview pane width,
+        -- this is the only way I was able to do it
+        -- NOTE: I don't think this is the right way as I'm declaring all the
+        -- other values below, if you know a better way, let me know
+        --
+        -- Then call this layout in the keymaps above
+        -- got example from here
+        -- https://github.com/folke/snacks.nvim/discussions/468
+        ivy = {
+          layout = {
+            box = "vertical",
+            backdrop = false,
+            row = -1,
+            width = 0,
+            height = 0.5,
+            border = "top",
+            title = " {title} {live} {flags}",
+            title_pos = "left",
+            { win = "input", height = 1, border = "bottom" },
+            {
+              box = "horizontal",
+              { win = "list", border = "none" },
+              { win = "preview", title = "{preview}", width = 0.5, border = "left" },
+            },
+          },
+        },
+        -- I wanted to modify the layout width
+        --
+        vertical = {
+          layout = {
+            backdrop = false,
+            width = 0.8,
+            min_width = 80,
+            height = 0.8,
+            min_height = 30,
+            box = "vertical",
+            border = "rounded",
+            title = "{title} {live} {flags}",
+            title_pos = "center",
+            { win = "input", height = 1, border = "bottom" },
+            { win = "list", border = "none" },
+            { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+          },
+        },
+      },
+      matcher = {
+        frecency = true,
+      },
+      win = {
+        input = {
+          keys = {
+            -- to close the picker on ESC instead of going to normal mode,
+            -- add the following keymap to your config
+            ["<Esc>"] = { "close", mode = { "n", "i" } },
+            -- I'm used to scrolling like this in LazyGit
+            ["J"] = { "preview_scroll_down", mode = { "i", "n" } },
+            ["K"] = { "preview_scroll_up", mode = { "i", "n" } },
+            ["H"] = { "preview_scroll_left", mode = { "i", "n" } },
+            ["L"] = { "preview_scroll_right", mode = { "i", "n" } },
+          },
+        },
+      },
     },
     profiler = { enabled = true },
     quickfile = { enabled = true },
@@ -95,7 +176,7 @@ return {
     scope = { enabled = true },
     scratch = { enabled = true },
     scroll = { enabled = false },
-    statuscolumn = { enabled = false },
+    statuscolumn = { enabled = true },
     styles = {
       notification = {
         wo = { wrap = true }, -- Wrap notifications
@@ -185,27 +266,38 @@ return {
       desc = "Buffers",
     },
     {
-      "<leader>/",
-      function()
-        Snacks.picker.grep()
-      end,
-      desc = "Grep",
-    },
-    {
       "<leader>:",
       function()
         Snacks.picker.command_history()
       end,
       desc = "Command History",
     },
+    -- File picker
+    -- {
+    --   "<leader><space>",
+    --   function()
+    --     Snacks.picker.files({
+    --       -- In case you want to override the layout for this keymap
+    --       layout = "ivy",
+    --     })
+    --   end,
+    --   desc = "Find Files",
+    -- },
     {
       "<leader><space>",
       function()
-        Snacks.picker.files()
+        Snacks.picker.files({
+          finder = "files",
+          format = "file",
+          show_empty = true,
+          supports_live = true,
+          -- In case you want to override the layout for this keymap
+          layout = "ivy",
+        })
       end,
       desc = "Find Files",
     },
-    -- find
+    -- Find
     {
       "<leader>fb",
       function()
@@ -241,13 +333,23 @@ return {
       end,
       desc = "Recent",
     },
-    -- git
+    -- Git
     {
       "<leader>gL",
       function()
         Snacks.picker.git_log()
       end,
       desc = "Git Log",
+    },
+    {
+      "<leader>gV",
+      -- Open git log in vertical view
+      function()
+        Snacks.picker.git_log({
+          layout = "vertical",
+        })
+      end,
+      desc = "Git Log (Vertical)",
     },
     {
       "<leader>gs",
@@ -257,6 +359,13 @@ return {
       desc = "Git Status",
     },
     -- Grep
+    {
+      "<leader>/",
+      function()
+        Snacks.picker.grep()
+      end,
+      desc = "Grep",
+    },
     {
       "<leader>sb",
       function()
@@ -286,7 +395,7 @@ return {
       desc = "Visual selection or word",
       mode = { "n", "x" },
     },
-    -- search
+    -- Search
     {
       '<leader>s"',
       function()
@@ -445,6 +554,66 @@ return {
       desc = "LSP Workspace Symbols",
       has = "workspace/symbols",
     },
+    -- -- Iterate through incomplete tasks in Snacks_picker
+    {
+      -- -- You can confirm in your teminal lamw26wmal with:
+      -- -- rg "^\s*-\s\[ \]" test-markdown.md
+      "<leader>ti",
+      function()
+        Snacks.picker.grep({
+          prompt = " ",
+          -- pass your desired search as a static pattern
+          search = "^\\s*- \\[ \\]",
+          -- we enable regex so the pattern is interpreted as a regex
+          regex = true,
+          -- no “live grep” needed here since we have a fixed pattern
+          live = false,
+          -- restrict search to the current working directory
+          dirs = { vim.fn.getcwd() },
+          -- include files ignored by .gitignore
+          args = { "--no-ignore" },
+          -- Start in normal mode
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+          finder = "grep",
+          format = "file",
+          show_empty = true,
+          supports_live = false,
+          layout = "ivy",
+        })
+      end,
+      desc = "[P]Search for Incomplete tasks",
+    },
+    -- -- Iterate throuth completed tasks in Snacks_picker lamw26wmal
+    {
+      "<leader>tc",
+      function()
+        Snacks.picker.grep({
+          prompt = " ",
+          -- pass your desired search as a static pattern
+          search = "^\\s*- \\[x\\] `done:",
+          -- we enable regex so the pattern is interpreted as a regex
+          regex = true,
+          -- no “live grep” needed here since we have a fixed pattern
+          live = false,
+          -- restrict search to the current working directory
+          dirs = { vim.fn.getcwd() },
+          -- include files ignored by .gitignore
+          args = { "--no-ignore" },
+          -- Start in normal mode
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+          finder = "grep",
+          format = "file",
+          show_empty = true,
+          supports_live = false,
+          layout = "ivy",
+        })
+      end,
+      desc = "[P]Search for Completed tasks",
+    },
   },
   reverse = true,
   layout = {
@@ -480,19 +649,19 @@ return {
         vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings
-        -- Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-        -- Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-        -- Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-        -- Snacks.toggle.diagnostics():map("<leader>ud")
-        -- Snacks.toggle.line_number():map("<leader>ul")
-        -- Snacks.toggle
-        --   .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-        --   :map("<leader>uc")
-        -- Snacks.toggle.treesitter():map("<leader>uT")
-        -- Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-        -- Snacks.toggle.inlay_hints():map("<leader>uh")
-        -- Snacks.toggle.indent():map("<leader>ug")
-        -- Snacks.toggle.dim():map("<leader>uD")
+        Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+        Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+        Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+        Snacks.toggle.diagnostics():map("<leader>ud")
+        Snacks.toggle.line_number():map("<leader>ul")
+        Snacks.toggle
+          .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+          :map("<leader>uc")
+        Snacks.toggle.treesitter():map("<leader>uT")
+        Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
+        Snacks.toggle.inlay_hints():map("<leader>uh")
+        Snacks.toggle.indent():map("<leader>ug")
+        Snacks.toggle.dim():map("<leader>uD")
       end,
     })
   end,

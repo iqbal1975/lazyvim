@@ -1,5 +1,6 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
+  enabled = false,
   opts = function(_, opts)
     local function on_move(data)
       Snacks.rename.on_rename_file(data.source, data.destination)

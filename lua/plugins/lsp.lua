@@ -246,7 +246,8 @@ return {
         Lua = {
           -- make the language server recognize "vim" global
           diagnostics = {
-            globals = { "vim" },
+            globals = { "vim", "Snacks" },
+            telemetry = { enable = false },
           },
           workspace = {
             -- make language server aware of runtime files

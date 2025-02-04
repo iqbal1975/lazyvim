@@ -23,10 +23,16 @@ return {
       ensure_installed = {
         "bash-debug-adapter",
         "codelldb",
+        "debugpy",
         "delve",
         "eslint_d", -- ts/js linter
         "flake8",
+        "go-debug-adapter",
+        "java-debug-adapter",
+        "java-test",
         "js-debug-adapter",
+        "perl-debug-adapter",
+        "php-debug-adapter",
         "prettier", -- ts/js formatter
         "shellcheck",
         "shfmt",
@@ -52,6 +58,7 @@ return {
         "marksman",
         "prosemd_lsp",
         "pyright",
+        "ruff",
         "rust_analyzer",
         "tailwindcss",
         "ts_ls",

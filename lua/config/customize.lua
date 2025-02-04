@@ -31,6 +31,8 @@ Customize = {
     -- ["editorconfig"] = { enabled = true },
     -- ["flit.nvim"] = { enabled = true },
     -- ["friendly-snippets"] = { enabled = true },
+    -- ["fzf"] = { enabled = false },
+    -- ["fzf-lua"] = { enabled = false },
     -- ["gh.nvim"] = { enabled = true },
     -- ["gitsigns.nvim"] = { enabled = true },
     -- ["harpoon"] = { enabled = true },

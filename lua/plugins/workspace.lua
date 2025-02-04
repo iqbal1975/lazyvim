@@ -1,6 +1,7 @@
 return {
   "sanathks/workspace.nvim",
-  dependencies = { "nvim-telescope/telescope.nvim" },
+  enabled = false,
+  -- dependencies = { "nvim-telescope/telescope.nvim" },
   config = function()
     require("workspace").setup({
       workspaces = {

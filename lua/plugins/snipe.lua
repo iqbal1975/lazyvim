@@ -19,8 +19,8 @@ return {
         -- Charaters to use for hints
         -- make sure they don't collide with the navigation keymaps
         -- If you remove `j` and `k` from below, you can navigate in the plugin
-        dictionary = "sadflewcmpghio",
-        -- dictionary = "asfghl;wertyuiop",
+        -- dictionary = "sadflewcmpghio",
+        dictionary = "asfghl;wertyuiop",
       },
       navigate = {
         -- In case you changed your mind, provide a keybind that lets you

@@ -95,13 +95,13 @@ return {
   { "ChristianChiarulli/swenv.nvim" },
 
   -- Telescope Import
-  {
-    "piersolenski/telescope-import.nvim",
-    dependencies = "nvim-telescope/telescope.nvim",
-    config = function()
-      require("telescope").load_extension("import")
-    end,
-  },
+  -- {
+  --   "piersolenski/telescope-import.nvim",
+  --   dependencies = "nvim-telescope/telescope.nvim",
+  --   config = function()
+  --     require("telescope").load_extension("import")
+  --   end,
+  -- },
 
   -- Tidy
   {
@@ -113,7 +113,7 @@ return {
       })
     end,
     init = function()
-      vim.keymap.set("n", "<leader>y", require("tidy").toggle, { desc = "Toggle Tidy" })
+      vim.keymap.set("n", "<leader>uy", require("tidy").toggle, { desc = "Toggle Tidy" })
     end,
   },
 

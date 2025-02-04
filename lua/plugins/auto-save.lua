@@ -22,8 +22,8 @@ vim.api.nvim_create_autocmd("User", {
   group = group,
   callback = function(opts)
     if opts.data.saved_buffer ~= nil then
-      -- print("AutoSaved at " .. vim.fn.strftime("%H:%M:%S"))
-      print("AutoSaved")
+      print("AutoSaved at " .. vim.fn.strftime("%H:%M:%S"))
+      -- print("AutoSaved")
     end
   end,
 })
@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 return {
   {
     "okuuva/auto-save.nvim",
-    enabled = true,
+    -- enabled = false,
     cmd = "ASToggle", -- optional for lazy loading on command
     event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
     opts = {
@@ -121,7 +121,7 @@ return {
       noautocmd = false,
       lockmarks = false, -- lock marks when saving, see `:h lockmarks` for more details
       -- delay after which a pending save is executed (default 1000)
-      debounce_delay = 2000,
+      debounce_delay = 5000,
       -- log debug messages to 'auto-save.log' file in neovim cache directory, set to `true` to enable
       debug = false,
     },

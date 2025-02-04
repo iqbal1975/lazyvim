@@ -37,7 +37,7 @@ vim.keymap.set("n", "<leader>Dbr", function()
   breakpoints.clear()
 end, { desc = "Remove All" })
 
-vim.keymap.set("n", "<leader>Dbs", "<CMD>Telescope dap list_breakpoints<CR>", { desc = "Show All" })
+-- vim.keymap.set("n", "<leader>Dbs", "<CMD>Telescope dap list_breakpoints<CR>", { desc = "Show All" })
 
 vim.keymap.set("n", "<leader>Dbt", function()
   dap.toggle_breakpoint()
@@ -55,7 +55,7 @@ vim.keymap.set("n", "<leader>Dp", function()
   dap.pause()
 end, { desc = "Pause" })
 
-vim.keymap.set("n", "<leader>Dr", "<CMD>Telescope dap configurations<CR>", { desc = "Run" })
+-- vim.keymap.set("n", "<leader>Dr", "<CMD>Telescope dap configurations<CR>", { desc = "Run" })
 
 vim.keymap.set("n", "<leader>Dsb", function()
   dap.step_back()
@@ -99,10 +99,10 @@ end, { desc = "Show Threads" })
 -- DAP Keymaps
 
 -- Telescope Keymap
-vim.keymap.set(
-  "n",
-  "<leader>sx",
-  require("telescope.builtin").resume,
-  { noremap = true, silent = true, desc = "Resume" }
-)
+-- vim.keymap.set(
+--   "n",
+--   "<leader>sx",
+--   require("telescope.builtin").resume,
+--   { noremap = true, silent = true, desc = "Resume" }
+-- )
 -- Telescope Keymap

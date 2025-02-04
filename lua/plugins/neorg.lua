@@ -1,6 +1,7 @@
 return {
   {
     "vhyrro/luarocks.nvim",
+    -- enabled = false,
     priority = 1001, -- We'd like this plugin to load first out of the rest
     config = true, -- This automatically runs `require("luarocks-nvim").setup()`
     opts = {
@@ -9,7 +10,7 @@ return {
   },
   {
     "3rd/image.nvim",
-    enabled = true,
+    -- enabled = false,
     dependencies = { "luarocks.nvim" },
     config = function()
       require("image").setup({
@@ -89,6 +90,7 @@ return {
   },
   {
     "nvim-neorg/neorg",
+    -- enabled = false,
     dependencies = { "luarocks.nvim" },
     -- put any other flags you wanted to pass to lazy here!
     lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
