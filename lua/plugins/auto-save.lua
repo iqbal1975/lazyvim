@@ -52,6 +52,16 @@ vim.api.nvim_create_autocmd("ModeChanged", {
   end,
 })
 
+-- flash.jump = function(opts)
+--   vim.api.nvim_exec_autocmds("User", { pattern = "FlashJumpStart" })
+--   -- print("flash.nvim enter")
+--
+--   original_jump(opts)
+--
+--   vim.api.nvim_exec_autocmds("User", { pattern = "FlashJumpEnd" })
+--   -- print("flash.nvim leave")
+-- end
+
 return {
   {
     "okuuva/auto-save.nvim",
