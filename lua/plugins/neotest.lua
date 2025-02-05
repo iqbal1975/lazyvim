@@ -1,9 +1,22 @@
 return {
-  { "nvim-neotest/neotest-go" },
-  { "nvim-neotest/nvim-nio" },
+  "nvim-neotest/neotest",
+  dependencies = {
+    "nvim-neotest/nvim-nio",
+    "nvim-lua/plenary.nvim",
+    "antoinemadec/FixCursorHold.nvim",
+    "nvim-treesitter/nvim-treesitter",
+  },
+  { "rcasia/neotest-bash" },
+  { "fredrikaverpil/neotest-golang", version = "*" },
+  { "alfaix/neotest-gtest" },
   { "nvim-neotest/neotest-plenary" },
   { "nvim-neotest/neotest-python" },
   { "rouge8/neotest-rust" },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5", -- Recommended
+    lazy = false, -- This plugin is already lazy
+  },
   { "nvim-neotest/neotest-vim-test" },
   opts = {
     -- Can be a list of adapters like what neotest expects,
@@ -13,9 +26,9 @@ return {
     -- adapters = {},
     -- Example for loading neotest-go with a custom config
     adapters = {
-      ["neotest-go"] = {
-        args = { "-tags=integration" },
-      },
+      ["neotest-bash"] = {},
+      ["neotest-golang"] = {},
+      ["neotest-gtest"] = {},
       ["neotest-plenary"] = {},
       ["neotest-python"] = {
         -- Here you can specify the settings for the adapter, i.e.
@@ -34,33 +47,6 @@ return {
       ["neotest-vim-test"] = {
         ignore_file_types = { "lua", "go", "python", "rust", "vim" },
       },
-    },
-  },
-  keys = {
-    {
-      "<leader>dm",
-      "<cmd>lua require('neotest').run.run()<cr>",
-      desc = "Test Method",
-    },
-    {
-      "<leader>dM",
-      "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>",
-      desc = "Test Method DAP",
-    },
-    {
-      "<leader>df",
-      "<cmd>lua require('neotest').run.run({vim.fn.expand('%')})<cr>",
-      desc = "Test Class",
-    },
-    {
-      "<leader>dF",
-      "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>",
-      desc = "Test Class DAP",
-    },
-    {
-      "<leader>dS",
-      "<cmd>lua require('neotest').summary.toggle()<cr>",
-      desc = "Test Summary",
     },
   },
 }

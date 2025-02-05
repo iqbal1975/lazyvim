@@ -95,15 +95,6 @@ return {
   -- Switch Python venv
   { "ChristianChiarulli/swenv.nvim" },
 
-  -- Telescope Import
-  -- {
-  --   "piersolenski/telescope-import.nvim",
-  --   dependencies = "nvim-telescope/telescope.nvim",
-  --   config = function()
-  --     require("telescope").load_extension("import")
-  --   end,
-  -- },
-
   -- Tidy
   {
     "mcauley-penney/tidy.nvim",

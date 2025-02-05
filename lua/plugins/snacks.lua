@@ -56,6 +56,9 @@ return {
     explorer = {
       enabled = true,
       replace_netrw = true, -- Replace netrw with the snacks explorer
+      layout = {
+        cycle = false,
+      },
     },
     git = { enabled = true },
     gitbrowse = { enabled = true },
@@ -121,6 +124,8 @@ return {
       -- I like the "ivy" layout, so I set it as the default globaly, you can
       -- still override it in different keymaps
       layout = {
+        -- presets options : "default" , "ivy" , "ivy-split" , "telescope" , "vscode", "select" , "sidebar"
+        -- override picker layout in keymaps function as a param below
         preset = "ivy",
         -- When reaching the bottom of the results in the picker, I don't want
         -- it to cycle and go back to the top

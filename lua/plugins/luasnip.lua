@@ -8,7 +8,7 @@
 return {
   "L3MON4D3/LuaSnip",
   dependencies = { "rafamadriz/friendly-snippets" },
-  enabled = true,
+  -- enabled = false,
   opts = function(_, opts)
     local ls = require("luasnip")
 

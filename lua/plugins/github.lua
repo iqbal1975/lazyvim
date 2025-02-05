@@ -2,7 +2,7 @@ return {
 
   {
     "ldelossa/gh.nvim",
-    enabled = false,
+    -- enabled = false,
     dependencies = {
       {
         "ldelossa/litee.nvim",
