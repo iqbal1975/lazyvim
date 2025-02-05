@@ -27,6 +27,7 @@ return {
   -- Fugit2
   {
     "SuperBo/fugit2.nvim",
+    -- enabled = false,
     opts = {},
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -39,7 +40,7 @@ return {
     },
     cmd = { "Fugit2", "Fugit2Graph" },
     keys = {
-      { "<leader>F", mode = "n", "<cmd>Fugit2<cr>", desc = "Fugit2" },
+      { "<leader>gF", mode = "n", "<cmd>Fugit2<cr>", desc = "Fugit2" },
     },
   },
 
