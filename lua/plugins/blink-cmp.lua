@@ -80,7 +80,7 @@ return {
           name = "LazyDev",
           module = "lazydev.integrations.blink",
           -- Make lazydev completions top priority (see `:h blink.cmp`)
-          score_offset = 100,
+          score_offset = 95,
         },
         lsp = {
           name = "lsp",
@@ -299,8 +299,8 @@ return {
     -- https://cmp.saghen.dev/configuration/keymap.html#default
     opts.keymap = {
       preset = "default",
-      ["<Tab>"] = { "snippet_forward", "fallback" },
-      ["<S-Tab>"] = { "snippet_backward", "fallback" },
+      ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+      ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
 
       ["<Up>"] = { "select_prev", "fallback" },
       ["<Down>"] = { "select_next", "fallback" },
@@ -315,6 +315,7 @@ return {
       ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-e>"] = { "hide", "fallback" },
       ["<CR>"] = { "accept", "fallback" },
+      ["<Esc>"] = { "hide", "fallback" },
     }
 
     return opts

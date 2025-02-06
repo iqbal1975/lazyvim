@@ -10,6 +10,13 @@ return {
     },
     { "jose-elias-alvarez/typescript.nvim" },
   },
+  optional = true,
+  opts = {
+    diagnostics = {
+      virtual_text = false,
+      virtual_lines = true,
+    },
+  },
   -- setup = {},
   config = function()
     -- import lspconfig plugin
