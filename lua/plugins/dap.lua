@@ -9,6 +9,7 @@ return {
         "theHamsta/nvim-dap-virtual-text",
         config = true,
       },
+      "igorlfs/nvim-dap-view",
     },
     config = function()
       vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "", linehl = "", numhl = "" })

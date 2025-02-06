@@ -28,6 +28,8 @@ return {
   -- If you use nix, you can build from source using latest nightly rust with:
   -- build = 'nix run .#build-plugin',
 
+  event = { "InsertEnter", "CmdlineEnter" },
+
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
 
@@ -50,7 +52,7 @@ return {
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups
       -- Useful for when your theme doesn't support blink.cmp
       -- Will be removed in a future release
-      use_nvim_cmp_as_default = true,
+      use_nvim_cmp_as_default = false,
       -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = "mono",
@@ -60,8 +62,26 @@ return {
     -- Merge custom sources with the existing ones from lazyvim
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-      default = { "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "emoji", "dictionary" },
+      default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "emoji", "dictionary" },
+      -- command line completion, thanks to dpetka2001 in reddit
+      -- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+      cmdline = function()
+        local type = vim.fn.getcmdtype()
+        if type == "/" or type == "?" then
+          return { "buffer" }
+        end
+        if type == ":" then
+          return { "cmdline" }
+        end
+        return {}
+      end,
       providers = {
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          -- Make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
+        },
         lsp = {
           name = "lsp",
           enabled = true,
@@ -209,18 +229,6 @@ return {
           async = true,
         },
       },
-      -- command line completion, thanks to dpetka2001 in reddit
-      -- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-      cmdline = function()
-        local type = vim.fn.getcmdtype()
-        if type == "/" or type == "?" then
-          return { "buffer" }
-        end
-        if type == ":" then
-          return { "cmdline" }
-        end
-        return {}
-      end,
     })
 
     opts.completion = {
@@ -230,18 +238,38 @@ return {
       --     -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
       --     range = "full",
       --   },
-      menu = {
-        border = "single",
-      },
+      -- menu = {
+      --   border = "single",
+      -- },
+      accept = { auto_brackets = { enabled = true } },
       documentation = {
         auto_show = true,
+        auto_show_delay_ms = 250,
+        update_delay_ms = 50,
+        treesitter_highlighting = true,
         window = {
-          border = "single",
+          border = "rounded",
         },
       },
       -- Displays a preview of the selected item on the current line
       ghost_text = {
         enabled = true,
+      },
+      list = {
+        selection = {
+          preselect = false,
+          auto_insert = false,
+        },
+      },
+      menu = {
+        border = "rounded",
+        draw = {
+          columns = {
+            { "label", "label_description", gap = 1 },
+            { "kind_icon", "kind" },
+          },
+          treesitter = { "lsp" },
+        },
       },
     }
 
@@ -279,11 +307,14 @@ return {
       ["<C-p>"] = { "select_prev", "fallback" },
       ["<C-n>"] = { "select_next", "fallback" },
 
+      ["<C-up>"] = { "scroll_documentation_up", "fallback" },
+      ["<C-down>"] = { "scroll_documentation_down", "fallback" },
       ["<S-k>"] = { "scroll_documentation_up", "fallback" },
       ["<S-j>"] = { "scroll_documentation_down", "fallback" },
 
       ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-e>"] = { "hide", "fallback" },
+      ["<CR>"] = { "accept", "fallback" },
     }
 
     return opts
