@@ -63,6 +63,7 @@ return {
     },
     git = { enabled = true },
     gitbrowse = { enabled = true },
+    image = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
     layout = { enabled = true },

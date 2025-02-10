@@ -12,11 +12,6 @@ vim.keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- Decr
 -- Make Split Windows Equal Width & Height
 vim.keymap.set("n", "<leader>=", "<C-w>=", { desc = "Make Splits Equal Size" })
 
--- Smart Find Files
-vim.keymap.set("n", "<leader><space>", function()
-  Snacks.picker.smart({ preset = "ivy", layout = { position = "bottom" } })
-end, { desc = "Smart Find Files" })
-
 -- DAP Keymaps
 local wk = require("which-key")
 wk.add({
@@ -102,12 +97,3 @@ vim.keymap.set("n", "<leader>Dvt", function()
   widgets.centered_float(widgets.threads, { border = "none" })
 end, { desc = "Show Threads" })
 -- DAP Keymaps
-
--- Telescope Keymap
--- vim.keymap.set(
---   "n",
---   "<leader>sx",
---   require("telescope.builtin").resume,
---   { noremap = true, silent = true, desc = "Resume" }
--- )
--- Telescope Keymap

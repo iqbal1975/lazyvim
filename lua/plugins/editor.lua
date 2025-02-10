@@ -77,6 +77,26 @@ return {
     end,
   },
 
+  -- Oil.nvim
+  {
+    "stevearc/oil.nvim",
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+
+    -- Oil Keymaps
+    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil - Parent Directory" }),
+
+    vim.keymap.set("n", ".", "<CMD>Oil toggle_hidden<CR>", { desc = "Oil - Toggle Hidden" }),
+
+    vim.keymap.set("n", "<C-\\>", "<CMD>Oil toggle_trash<CR>", { desc = "Oil - Toggle Trash" }),
+  },
+
   -- Shebang
   {
     "susensio/magic-bang.nvim",
