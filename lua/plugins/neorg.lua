@@ -11,13 +11,17 @@ return {
   {
     "3rd/image.nvim",
     -- enabled = false,
-    dependencies = { "luarocks.nvim" },
+    build = false, -- do not build with hererocks
+    dependencies = {
+      "kiyoon/magick.nvim",
+      "luarocks.nvim",
+    },
     config = function()
       require("image").setup({
         backend = "kitty",
         kitty_method = "normal",
         integrations = {
-          -- Notice these are the settings for markdown files
+          -- These are the settings for markdown files
           markdown = {
             enabled = true,
             clear_in_insert_mode = false,

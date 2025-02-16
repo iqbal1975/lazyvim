@@ -196,18 +196,19 @@ return {
             dictionary_files = {
               vim.fn.expand("~/apps/dictionaries/en.utf-8.add"),
             },
-            -- --  NOTE: To disable the definitions uncomment this section below
-            -- separate_output = function(output)
-            --   local items = {}
-            --   for line in output:gmatch("[^\r\n]+") do
-            --     table.insert(items, {
-            --       label = line,
-            --       insert_text = line,
-            --       documentation = nil,
-            --     })
-            --   end
-            --   return items
-            -- end,
+            --  NOTE: To disable the definitions uncomment this section below
+            --
+            separate_output = function(output)
+              local items = {}
+              for line in output:gmatch("[^\r\n]+") do
+                table.insert(items, {
+                  label = line,
+                  insert_text = line,
+                  documentation = nil,
+                })
+              end
+              return items
+            end,
           },
         },
         -- Third class citizen mf always talking shit
