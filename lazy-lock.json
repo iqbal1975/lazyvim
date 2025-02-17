@@ -1,5 +1,5 @@
 {
-  "CopilotChat.nvim": { "branch": "main", "commit": "7d717e4991489ae932fe9ad98a7a0809962203c4" },
+  "CopilotChat.nvim": { "branch": "main", "commit": "b634f04ee275cba4870533a69b89054a7e1c1cb3" },
   "LazyVim": { "branch": "main", "commit": "3f034d0a7f58031123300309f2efd3bb0356ee21" },
   "LuaSnip": { "branch": "master", "commit": "c9b9a22904c97d0eb69ccb9bab76037838326817" },
   "R.nvim": { "branch": "main", "commit": "ab7afd54bd0410100911a8557bd7f94764a8ff20" },
@@ -7,6 +7,7 @@
   "aerial.nvim": { "branch": "master", "commit": "3284a2cb858ba009c79da87d5e010ccee3c99c4d" },
   "auto-save.nvim": { "branch": "main", "commit": "29f793a3a7f98129387590269ffe3ad61ab5e509" },
   "auto-session": { "branch": "main", "commit": "9c3f977aafb56bd73ba0d082c4dcbdba5666faf3" },
+  "avante.nvim": { "branch": "main", "commit": "b21d2632d3990f162aee57f9151864cd2fd77cac" },
   "blink-cmp-copilot": { "branch": "main", "commit": "5d4ed42c5d7d144012792bb6cc4ac7899a108169" },
   "blink-cmp-dictionary": { "branch": "master", "commit": "97c060e0751e95d2a1fbffe2871712bb676092ab" },
   "blink-emoji.nvim": { "branch": "master", "commit": "a77aebc092ebece1eed108f301452ae774d6b67a" },
@@ -40,6 +41,7 @@
   "harpoon": { "branch": "harpoon2", "commit": "ed1f853847ffd04b2b61c314865665e1dadf22c7" },
   "hurl.nvim": { "branch": "main", "commit": "303af4b29c0de7464c37df113c297aee7e773179" },
   "image.nvim": { "branch": "master", "commit": "6ffafab2e98b5bda46bf227055aa84b90add8cdc" },
+  "img-clip.nvim": { "branch": "main", "commit": "5ded6f468d633ccfb315905fe8901d6c95ae8f29" },
   "inc-rename.nvim": { "branch": "main", "commit": "f9b9e5b9a75074810f40881b7e254b5bbeaf122e" },
   "kubectl.nvim": { "branch": "main", "commit": "4af942197b42d954e9ef62567003721e81aa5a4c" },
   "lazy.nvim": { "branch": "main", "commit": "7e6c863bc7563efbdd757a310d17ebc95166cef3" },

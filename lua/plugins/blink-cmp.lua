@@ -55,7 +55,19 @@ return {
     -- Merge custom sources with the existing ones from lazyvim
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-      default = { "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "emoji", "dictionary" },
+      default = {
+        "lsp",
+        "path",
+        "snippets",
+        "buffer",
+        "copilot",
+        "dadbod",
+        "emoji",
+        "dictionary",
+        "avante_commands",
+        "avante_mentions",
+        "avante_files",
+      },
       providers = {
         lsp = {
           name = "lsp",
@@ -207,6 +219,24 @@ return {
           min_keyword_length = 6,
           score_offset = -100, -- the higher the number, the higher the priority
           async = true,
+        },
+        avante_commands = {
+          name = "avante_commands",
+          module = "blink.compat.source",
+          score_offset = 90, -- show at a higher priority than lsp
+          opts = {},
+        },
+        avante_files = {
+          name = "avante_files",
+          module = "blink.compat.source",
+          score_offset = 100, -- show at a higher priority than lsp
+          opts = {},
+        },
+        avante_mentions = {
+          name = "avante_mentions",
+          module = "blink.compat.source",
+          score_offset = 1000, -- show at a higher priority than lsp
+          opts = {},
         },
       },
     })
