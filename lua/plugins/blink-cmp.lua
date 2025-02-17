@@ -11,6 +11,7 @@ local trigger_text = ";"
 return {
   "saghen/blink.cmp",
   -- enabled = false,
+  -- optional: provides snippets for the snippet source
   dependencies = {
     "Kaiser-Yang/blink-cmp-dictionary",
     "moyiz/blink-emoji.nvim",
@@ -34,7 +35,7 @@ return {
       -- Get the current buffer's filetype
       local filetype = vim.bo[0].filetype
       -- Disable for Telescope buffers
-      if filetype == "TelescopePrompt" or filetype == "minifiles" then
+      if filetype == "TelescopePrompt" or filetype == "minifiles" or filetype == "snacks_picker_input" then
         return false
       end
       return true
@@ -44,7 +45,7 @@ return {
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups
       -- Useful for when your theme doesn't support blink.cmp
       -- Will be removed in a future release
-      use_nvim_cmp_as_default = false,
+      use_nvim_cmp_as_default = true,
       -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = "mono",
@@ -54,31 +55,14 @@ return {
     -- Merge custom sources with the existing ones from lazyvim
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
-      default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "emoji", "dictionary" },
-      -- command line completion, thanks to dpetka2001 in reddit
-      -- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-      cmdline = function()
-        local type = vim.fn.getcmdtype()
-        if type == "/" or type == "?" then
-          return { "buffer" }
-        end
-        if type == ":" then
-          return { "cmdline" }
-        end
-        return {}
-      end,
+      default = { "lsp", "path", "snippets", "buffer", "copilot", "dadbod", "emoji", "dictionary" },
       providers = {
-        lazydev = {
-          name = "LazyDev",
-          module = "lazydev.integrations.blink",
-          -- Make lazydev completions top priority (see `:h blink.cmp`)
-          score_offset = 95,
-        },
         lsp = {
           name = "lsp",
           enabled = true,
           module = "blink.cmp.sources.lsp",
           kind = "LSP",
+          min_keyword_length = 2,
           -- When linking markdown notes, I would get snippets and text in the
           -- suggestions, I want those to show only if there are no LSP
           -- suggestions
@@ -97,6 +81,7 @@ return {
           -- suggestions, I want those to show only if there are no path
           -- suggestions
           fallbacks = { "snippets", "buffer" },
+          min_keyword_length = 2,
           opts = {
             trailing_slash = false,
             label_trailing_slash = true,
@@ -109,7 +94,7 @@ return {
         buffer = {
           name = "Buffer",
           enabled = true,
-          max_items = 3,
+          max_items = 5,
           module = "blink.cmp.sources.buffer",
           min_keyword_length = 4,
           score_offset = 15, -- the higher the number, the higher the priority
@@ -117,7 +102,7 @@ return {
         snippets = {
           name = "snippets",
           enabled = true,
-          max_items = 5,
+          max_items = 15,
           min_keyword_length = 2,
           module = "blink.cmp.sources.snippets",
           score_offset = 85, -- the higher the number, the higher the priority
@@ -161,13 +146,15 @@ return {
         dadbod = {
           name = "Dadbod",
           module = "vim_dadbod_completion.blink",
+          min_keyword_length = 2,
           score_offset = 85, -- the higher the number, the higher the priority
         },
         -- https://github.com/moyiz/blink-emoji.nvim
         emoji = {
           module = "blink-emoji",
           name = "Emoji",
-          score_offset = 15, -- the higher the number, the higher the priority
+          score_offset = 90, -- the higher the number, the higher the priority
+          min_keyword_length = 2,
           opts = { insert = true }, -- Insert emoji (default) or complete its name
         },
         -- https://github.com/Kaiser-Yang/blink-cmp-dictionary
@@ -182,7 +169,7 @@ return {
           score_offset = 20, -- the higher the number, the higher the priority
           -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
           enabled = true,
-          max_items = 8,
+          max_items = 10,
           min_keyword_length = 3,
           opts = {
             -- -- The dictionary by default now uses fzf, make sure to have it
@@ -198,17 +185,17 @@ return {
             },
             --  NOTE: To disable the definitions uncomment this section below
             --
-            separate_output = function(output)
-              local items = {}
-              for line in output:gmatch("[^\r\n]+") do
-                table.insert(items, {
-                  label = line,
-                  insert_text = line,
-                  documentation = nil,
-                })
-              end
-              return items
-            end,
+            -- separate_output = function(output)
+            --   local items = {}
+            --   for line in output:gmatch("[^\r\n]+") do
+            --     table.insert(items, {
+            --       label = line,
+            --       insert_text = line,
+            --       documentation = nil,
+            --     })
+            --   end
+            --   return items
+            -- end,
           },
         },
         -- Third class citizen mf always talking shit
@@ -223,6 +210,21 @@ return {
         },
       },
     })
+
+    opts.cmdline = {
+      -- command line completion, thanks to dpetka2001 in reddit
+      -- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+      sources = function()
+        local type = vim.fn.getcmdtype()
+        if type == "/" or type == "?" then
+          return { "buffer" }
+        end
+        if type == ":" then
+          return { "cmdline" }
+        end
+        return {}
+      end,
+    }
 
     opts.completion = {
       --   keyword = {
@@ -309,6 +311,57 @@ return {
       ["<C-e>"] = { "hide", "fallback" },
       ["<CR>"] = { "accept", "fallback" },
       ["<Esc>"] = { "hide", "fallback" },
+
+      ["<A-1>"] = {
+        function(cmp)
+          cmp.accept({ index = 1 })
+        end,
+      },
+      ["<A-2>"] = {
+        function(cmp)
+          cmp.accept({ index = 2 })
+        end,
+      },
+      ["<A-3>"] = {
+        function(cmp)
+          cmp.accept({ index = 3 })
+        end,
+      },
+      ["<A-4>"] = {
+        function(cmp)
+          cmp.accept({ index = 4 })
+        end,
+      },
+      ["<A-5>"] = {
+        function(cmp)
+          cmp.accept({ index = 5 })
+        end,
+      },
+      ["<A-6>"] = {
+        function(cmp)
+          cmp.accept({ index = 6 })
+        end,
+      },
+      ["<A-7>"] = {
+        function(cmp)
+          cmp.accept({ index = 7 })
+        end,
+      },
+      ["<A-8>"] = {
+        function(cmp)
+          cmp.accept({ index = 8 })
+        end,
+      },
+      ["<A-9>"] = {
+        function(cmp)
+          cmp.accept({ index = 9 })
+        end,
+      },
+      ["<A-0>"] = {
+        function(cmp)
+          cmp.accept({ index = 10 })
+        end,
+      },
     }
 
     return opts
