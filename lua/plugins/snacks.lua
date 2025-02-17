@@ -2,8 +2,10 @@ return {
   "folke/snacks.nvim",
   lazy = false,
   priority = 1005,
+
   ---@module 'snacks'
   ---@type snacks.Config
+
   opts = {
     animate = {
       enabled = true,
