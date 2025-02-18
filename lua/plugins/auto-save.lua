@@ -52,6 +52,10 @@ vim.api.nvim_create_autocmd("ModeChanged", {
   end,
 })
 
+-- -- Override the `flash.jump` function to detect start and end
+-- local flash = require("flash")
+-- local original_jump = flash.jump
+--
 -- flash.jump = function(opts)
 --   vim.api.nvim_exec_autocmds("User", { pattern = "FlashJumpStart" })
 --   -- print("flash.nvim enter")
@@ -61,6 +65,52 @@ vim.api.nvim_create_autocmd("ModeChanged", {
 --   vim.api.nvim_exec_autocmds("User", { pattern = "FlashJumpEnd" })
 --   -- print("flash.nvim leave")
 -- end
+
+-- Disable auto-save when entering a snacks_input buffer
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "snacks_input",
+  group = group,
+  callback = function()
+    vim.api.nvim_exec_autocmds("User", { pattern = "SnacksInputEnter" })
+    -- print("snacks input enter")
+  end,
+})
+
+-- Re-enable auto-save when leaving that buffer
+vim.api.nvim_create_autocmd("BufLeave", {
+  group = group,
+  pattern = "*", -- check all buffers
+  callback = function(opts)
+    local ft = vim.bo[opts.buf].filetype
+    if ft == "snacks_input" then
+      vim.api.nvim_exec_autocmds("User", { pattern = "SnacksInputLeave" })
+      -- print("snacks input leave")
+    end
+  end,
+})
+
+-- Disable auto-save when entering a snacks_input buffer
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "snacks_picker_input",
+  group = group,
+  callback = function()
+    vim.api.nvim_exec_autocmds("User", { pattern = "SnacksPickerInputEnter" })
+    -- print("snacks picker input enter")
+  end,
+})
+
+-- Re-enable auto-save when leaving that buffer
+vim.api.nvim_create_autocmd("BufLeave", {
+  group = group,
+  pattern = "*", -- check all buffers
+  callback = function(opts)
+    local ft = vim.bo[opts.buf].filetype
+    if ft == "snacks_picker_input" then
+      vim.api.nvim_exec_autocmds("User", { pattern = "SnacksPickerInputLeave" })
+      -- print("snacks picker input leave")
+    end
+  end,
+})
 
 return {
   {
@@ -83,11 +133,15 @@ return {
           "TextChanged",
           { "User", pattern = "VisualLeave" },
           -- { "User", pattern = "FlashJumpEnd" },
+          { "User", pattern = "SnacksInputLeave" },
+          { "User", pattern = "SnacksPickerInputLeave" },
         },
         cancel_deferred_save = {
           "InsertEnter",
           { "User", pattern = "VisualEnter" },
           -- { "User", pattern = "FlashJumpStart" },
+          { "User", pattern = "SnacksInputEnter" },
+          { "User", pattern = "SnacksPickerInputEnter" },
         },
       },
       -- function that takes the buffer handle and determines whether to save the current buffer or not
@@ -131,7 +185,7 @@ return {
       noautocmd = false,
       lockmarks = false, -- lock marks when saving, see `:h lockmarks` for more details
       -- delay after which a pending save is executed (default 1000)
-      debounce_delay = 5000,
+      debounce_delay = 3000,
       -- log debug messages to 'auto-save.log' file in neovim cache directory, set to `true` to enable
       debug = false,
     },
