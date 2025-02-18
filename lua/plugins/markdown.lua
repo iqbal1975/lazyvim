@@ -4,6 +4,7 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     enabled = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+    ft = { "markdown", "codecompanion" },
     opts = {
       bullet = {
         -- Turn on / off list bullet rendering
@@ -63,6 +64,12 @@ return {
   {
     "OXY2DEV/markview.nvim",
     lazy = false,
+    opts = {
+      preview = {
+        filetypes = { "markdown", "codecompanion" },
+        ignore_buftypes = {},
+      },
+    },
   },
 
   "preservim/vim-pencil",
