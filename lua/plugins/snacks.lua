@@ -7,12 +7,7 @@ return {
   ---@type snacks.Config
 
   opts = {
-    animate = {
-      enabled = true,
-      duration = 20, -- ms per step
-      easing = "linear",
-      fps = 60,
-    },
+    animate = { enabled = true },
     bigfile = {
       enabled = true,
       notify = true,
