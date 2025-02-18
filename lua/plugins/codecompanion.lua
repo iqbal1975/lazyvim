@@ -3,6 +3,7 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "j-hui/fidget.nvim",
   },
   opts = {
     send_code = false,
@@ -126,4 +127,7 @@ return {
       log_level = "DEBUG",
     },
   },
+  init = function()
+    require("plugins.codecompanion.fidget-spinner"):init()
+  end,
 }
