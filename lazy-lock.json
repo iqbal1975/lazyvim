@@ -1,5 +1,5 @@
 {
-  "CopilotChat.nvim": { "branch": "main", "commit": "3094dd8ed111df29d074073e6e6bac02e9aca1a9" },
+  "CopilotChat.nvim": { "branch": "main", "commit": "80fd5d485aaadf7cf2f97f90ccd82ebf4092f874" },
   "LazyVim": { "branch": "main", "commit": "3f034d0a7f58031123300309f2efd3bb0356ee21" },
   "LuaSnip": { "branch": "master", "commit": "c9b9a22904c97d0eb69ccb9bab76037838326817" },
   "R.nvim": { "branch": "main", "commit": "48c0cafdad3baddc350dea9d68f3bc3d1db3065a" },
@@ -19,7 +19,7 @@
   "chezmoi.vim": { "branch": "main", "commit": "abf37336437867cbd99ce2f8849b717415391cc3" },
   "clangd_extensions.nvim": { "branch": "main", "commit": "db28f29be928d18cbfb86fbfb9f83f584f658feb" },
   "cmake-tools.nvim": { "branch": "master", "commit": "680a50111f6ebbbc0f126d07ad701bdbd4d1c599" },
-  "codecompanion.nvim": { "branch": "main", "commit": "3e4fb6176a9c1df456795a22891f865a2f4ee56a" },
+  "codecompanion.nvim": { "branch": "main", "commit": "a0a82a50f5e607187e4b978ef83c804b053dc455" },
   "codeium.nvim": { "branch": "main", "commit": "ebed4f7cc8a18184d8332d421ca10bed5f7d59a1" },
   "conform.nvim": { "branch": "master", "commit": "a6f5bdb78caa305496357d17e962bbc4c0b392e2" },
   "copilot.lua": { "branch": "master", "commit": "30321e33b03cb924fdcd6a806a0dc6fa0b0eafb9" },

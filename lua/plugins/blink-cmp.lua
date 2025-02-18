@@ -56,6 +56,7 @@ return {
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
       default = {
+        "lazydev",
         "lsp",
         "path",
         "snippets",
@@ -67,33 +68,43 @@ return {
         "avante_commands",
         "avante_mentions",
         "avante_files",
+        "codecompanion",
+        "omni",
       },
+
       providers = {
+        lazydev = {
+          name = "LazyDev",
+          enabled = true,
+          module = "lazydev.integrations.blink",
+          kind = "LDev",
+          -- make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
+        },
+
         lsp = {
           name = "lsp",
           enabled = true,
           module = "blink.cmp.sources.lsp",
           kind = "LSP",
-          min_keyword_length = 2,
-          -- When linking markdown notes, I would get snippets and text in the
-          -- suggestions, I want those to show only if there are no LSP
-          -- suggestions
-          --
-          -- Enabled fallbacks as this seems to be working now
-          -- Disabling fallbacks as my snippets wouldn't show up when editing
-          -- lua files
-          -- fallbacks = { "snippets", "buffer" },
+          min_keyword_length = 3,
+          fallbacks = { "buffer" },
           score_offset = 90, -- the higher the number, the higher the priority
+          -- Filter text items from the LSP provider, since we have the buffer provider for that
+          transform_items = function(_, items)
+            return vim.tbl_filter(function(item)
+              return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+            end, items)
+          end,
         },
+
         path = {
           name = "Path",
+          enabled = true,
           module = "blink.cmp.sources.path",
           score_offset = 25,
-          -- When typing a path, I would get snippets and text in the
-          -- suggestions, I want those to show only if there are no path
-          -- suggestions
-          fallbacks = { "snippets", "buffer" },
-          min_keyword_length = 2,
+          fallbacks = { "buffer" },
+          min_keyword_length = 3,
           opts = {
             trailing_slash = false,
             label_trailing_slash = true,
@@ -103,19 +114,35 @@ return {
             show_hidden_files_by_default = true,
           },
         },
+
         buffer = {
           name = "Buffer",
           enabled = true,
-          max_items = 5,
+          max_items = 15,
           module = "blink.cmp.sources.buffer",
-          min_keyword_length = 4,
+          min_keyword_length = 3,
           score_offset = 15, -- the higher the number, the higher the priority
+          opts = {
+            -- default to all visible buffers
+            get_bufnrs = function()
+              return vim
+                .iter(vim.api.nvim_list_wins())
+                :map(function(win)
+                  return vim.api.nvim_win_get_buf(win)
+                end)
+                :filter(function(buf)
+                  return vim.bo[buf].buftype ~= "nofile"
+                end)
+                :totable()
+            end,
+          },
         },
+
         snippets = {
           name = "snippets",
           enabled = true,
           max_items = 15,
-          min_keyword_length = 2,
+          min_keyword_length = 3,
           module = "blink.cmp.sources.snippets",
           score_offset = 85, -- the higher the number, the higher the priority
           -- Only show snippets if I type the trigger_text characters, so
@@ -152,15 +179,24 @@ return {
             end)
             return items
           end,
+          -- For `snippets.preset == 'luasnip'`
+          opts = {
+            -- Whether to use show_condition for filtering snippets
+            use_show_condition = true,
+            -- Whether to show autosnippets in the completion list
+            show_autosnippets = true,
+          },
         },
+
         -- Example on how to configure dadbod found in the main repo
         -- https://github.com/kristijanhusak/vim-dadbod-completion
         dadbod = {
           name = "Dadbod",
           module = "vim_dadbod_completion.blink",
-          min_keyword_length = 2,
+          min_keyword_length = 3,
           score_offset = 85, -- the higher the number, the higher the priority
         },
+
         -- https://github.com/moyiz/blink-emoji.nvim
         emoji = {
           module = "blink-emoji",
@@ -169,6 +205,7 @@ return {
           min_keyword_length = 2,
           opts = { insert = true }, -- Insert emoji (default) or complete its name
         },
+
         -- https://github.com/Kaiser-Yang/blink-cmp-dictionary
         -- In macOS to get started with a dictionary:
         -- cp /usr/share/dict/words ~/github/dotfiles-latest/dictionaries/words.txt
@@ -210,32 +247,56 @@ return {
             -- end,
           },
         },
+
+        omni = {
+          name = "Omni",
+          module = "blink.cmp.sources.omni",
+          enabled = true,
+          opts = {
+            disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
+          },
+        },
+
         -- Third class citizen mf always talking shit
         copilot = {
           name = "copilot",
           enabled = true,
           module = "blink-cmp-copilot",
           kind = "Copilot",
-          min_keyword_length = 6,
+          min_keyword_length = 3,
           score_offset = -100, -- the higher the number, the higher the priority
           async = true,
         },
+
+        -- Avante completion
         avante_commands = {
           name = "avante_commands",
           module = "blink.compat.source",
+          enabled = true,
           score_offset = 90, -- show at a higher priority than lsp
           opts = {},
         },
         avante_files = {
           name = "avante_files",
           module = "blink.compat.source",
+          enabled = true,
           score_offset = 100, -- show at a higher priority than lsp
           opts = {},
         },
         avante_mentions = {
           name = "avante_mentions",
           module = "blink.compat.source",
+          enabled = true,
           score_offset = 1000, -- show at a higher priority than lsp
+          opts = {},
+        },
+
+        -- Code Companion
+        codecompanion = {
+          name = "codecompanion",
+          module = "codecompanion.providers.completion.blink",
+          enabled = true,
+          score_offset = 100, -- show at a higher priority than lsp
           opts = {},
         },
       },
