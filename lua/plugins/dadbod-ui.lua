@@ -52,8 +52,8 @@ How to's
 return {
   "kristijanhusak/vim-dadbod-ui",
   dependencies = {
-    { "tpope/vim-dadbod" },
-    { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" } },
+    { "tpope/vim-dadbod", lazy = true },
+    { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
   },
   keys = { -- Mapping to toggle DBUI
     { "<leader>uB", "<cmd>DBUIToggle<CR>", desc = "Toggle DBUI" },

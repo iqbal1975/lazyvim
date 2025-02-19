@@ -24,6 +24,9 @@ return {
     event = "VeryLazy",
   },
 
+  -- Feed
+  { "neo451/feed.nvim", cmd = "Feed" },
+
   -- Fugit2
   {
     "SuperBo/fugit2.nvim",

@@ -89,7 +89,7 @@ return {
           kind = "LSP",
           min_keyword_length = 3,
           fallbacks = { "buffer" },
-          score_offset = 90, -- the higher the number, the higher the priority
+          score_offset = 85, -- the higher the number, the higher the priority
           -- Filter text items from the LSP provider, since we have the buffer provider for that
           transform_items = function(_, items)
             return vim.tbl_filter(function(item)
@@ -264,7 +264,7 @@ return {
           module = "blink-cmp-copilot",
           kind = "Copilot",
           min_keyword_length = 3,
-          score_offset = -100, -- the higher the number, the higher the priority
+          score_offset = 90, -- the higher the number, the higher the priority
           async = true,
         },
 
@@ -273,6 +273,7 @@ return {
           name = "avante_commands",
           module = "blink.compat.source",
           enabled = true,
+          kind = "Avante",
           score_offset = 90, -- show at a higher priority than lsp
           opts = {},
         },
@@ -280,6 +281,7 @@ return {
           name = "avante_files",
           module = "blink.compat.source",
           enabled = true,
+          kind = "Avante",
           score_offset = 100, -- show at a higher priority than lsp
           opts = {},
         },
@@ -287,6 +289,7 @@ return {
           name = "avante_mentions",
           module = "blink.compat.source",
           enabled = true,
+          kind = "Avante",
           score_offset = 1000, -- show at a higher priority than lsp
           opts = {},
         },
@@ -296,7 +299,8 @@ return {
           name = "codecompanion",
           module = "codecompanion.providers.completion.blink",
           enabled = true,
-          score_offset = 100, -- show at a higher priority than lsp
+          kind = "CodeCompanion",
+          score_offset = 95, -- show at a higher priority than lsp
           opts = {},
         },
       },

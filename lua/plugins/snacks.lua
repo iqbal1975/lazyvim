@@ -161,6 +161,9 @@ return {
         -- For me returns `~/.cache/neobean/snacks/image`
         -- Go 1 dir above and check `sudo du -sh ./* | sort -hr | head -n 5`
       },
+      wo = {
+        winhighlight = "FloatBorder:WhichKeyBorder",
+      },
     },
     indent = { enabled = true },
     input = { enabled = true },
@@ -306,6 +309,11 @@ return {
       enabled = true,
       notification = {
         wo = { wrap = true }, -- Wrap notifications
+      },
+      -- INFO: show top right of screen
+      snacks_image = {
+        relative = "editor",
+        col = -1,
       },
     },
     toggle = { enabled = true },
