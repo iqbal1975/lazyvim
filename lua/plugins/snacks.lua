@@ -310,6 +310,8 @@ return {
       notification = {
         wo = { wrap = true }, -- Wrap notifications
       },
+      -- This keeps the image on the top right corner, basically leaving your
+      -- text area free, suggestion found in reddit by user `Redox_ahmii`
       -- INFO: show top right of screen
       snacks_image = {
         relative = "editor",
@@ -415,6 +417,20 @@ return {
         Snacks.picker.git_branches()
       end,
       desc = "Git Branches",
+    },
+    -- Open git log in vertical view
+    {
+      "<leader>gl",
+      function()
+        Snacks.picker.git_log({
+          finder = "git_log",
+          format = "git_log",
+          preview = "git_show",
+          confirm = "git_checkout",
+          layout = "vertical",
+        })
+      end,
+      desc = "Git Log",
     },
     {
       "<leader>g1",
