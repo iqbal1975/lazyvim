@@ -382,6 +382,13 @@ return {
       end,
     }
 
+    -- Blink.cmp uses a Rust fuzzy matcher by default for typo resistance and significantly better performance
+    -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+    -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+    --
+    -- See the fuzzy documentation for more information
+    opts.fuzzy = { implementation = "prefer_rust_with_warning" }
+
     -- The default preset used by lazyvim accepts completions with enter
     -- I don't like using enter because if on markdown and typing
     -- something, but you want to go to the line below, if you press enter,

@@ -30,6 +30,11 @@ end
 
 vim.cmd([[filetype plugin indent on]])
 
+-- Function to get the number of open buffers using the :ls command
+-- local function get_buffer_count()
+--   return vim.fn.len(vim.fn.getbufinfo({ buflisted = 1 }))
+-- end
+
 vim.filetype.add({
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
