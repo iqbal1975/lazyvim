@@ -10,10 +10,14 @@ return {
     adapters = {
       openai = function()
         return require("codecompanion.adapters").extend("openai", {
+          env = {
+            -- api_key = "cmd:op read op://personal/OpenAI/credential --no-newline",
+            api_key = "OPENAI_API_KEY",
+          },
           schema = {
             model = {
-              -- default = "gpt-4",
-              default = "o1",
+              -- default = "gpt-4o",
+              default = "o1-2024-12-17",
             },
           },
         })
@@ -66,9 +70,8 @@ return {
 
         ---Customize how tokens are displayed
         ---@param tokens number
-        ---@param adapter CodeCompanion.Adapter
         ---@return string
-        token_count = function(tokens, adapter)
+        token_count = function(tokens)
           return " (" .. tokens .. " tokens)"
         end,
       },
@@ -86,7 +89,8 @@ return {
     strategies = {
       -- Change the default chat adapter
       chat = {
-        adapter = "anthropic",
+        -- adapter = "anthropic",
+        adapter = "openai",
         keymaps = {
           send = {
             modes = { n = "<C-s>", i = "<C-s>" },
@@ -98,7 +102,7 @@ return {
         },
         roles = {
           ---The header name for the LLM's messages
-          ---@type string|fun(adapter: CodeCompanion.Adapter): string
+          ---@type string|fun(adapter: table): string
           llm = function(adapter)
             return "CodeCompanion (" .. adapter.formatted_name .. ")"
           end,
@@ -109,7 +113,8 @@ return {
         },
       },
       inline = {
-        adapter = "anthropic",
+        -- adapter = "anthropic",
+        adapter = "copilot",
         keymaps = {
           accept_change = {
             modes = { n = "ga" },

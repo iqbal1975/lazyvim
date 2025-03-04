@@ -22,6 +22,9 @@ return {
     -- import lspconfig plugin
     local lspconfig = require("lspconfig")
 
+    -- used to enable autocompletion (assign to every lsp server config)
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
+
     local keymap = vim.keymap -- for conciseness
 
     local opts = { noremap = true, silent = true }
@@ -68,9 +71,6 @@ return {
       opts.desc = "Restart LSP"
       keymap.set("n", "<leader>cR", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
     end
-
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = require("blink.cmp").get_lsp_capabilities()
 
     -- configure clangd server
     lspconfig["clangd"].setup({

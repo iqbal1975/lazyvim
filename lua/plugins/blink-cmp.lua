@@ -13,6 +13,7 @@ return {
   -- enabled = false,
   -- optional: provides snippets for the snippet source
   dependencies = {
+    "Kaiser-Yang/blink-cmp-avante",
     "Kaiser-Yang/blink-cmp-dictionary",
     "moyiz/blink-emoji.nvim",
     "rafamadriz/friendly-snippets",
@@ -56,19 +57,17 @@ return {
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
       default = {
+        "avante",
         "lazydev",
         "lsp",
         "path",
         "snippets",
         "buffer",
-        "copilot",
         "dadbod",
         "emoji",
         "dictionary",
-        "avante_commands",
-        "avante_mentions",
-        "avante_files",
         "codecompanion",
+        "copilot",
         "omni",
       },
 
@@ -248,6 +247,14 @@ return {
           },
         },
 
+        -- Command Line
+        cmdline = {
+          -- ignores cmdline completions when executing shell commands
+          enabled = function()
+            return vim.fn.getcmdtype() ~= ":" or not vim.fn.getcmdline():match("^[%%0-9,'<>%-]*!")
+          end,
+        },
+
         omni = {
           name = "Omni",
           module = "blink.cmp.sources.omni",
@@ -257,41 +264,18 @@ return {
           },
         },
 
-        -- Third class citizen mf always talking shit
-        copilot = {
-          name = "copilot",
-          enabled = true,
-          module = "blink-cmp-copilot",
-          kind = "Copilot",
+        -- AI Companions
+        -- Avante completion
+        avante = {
+          module = "blink-cmp-avante",
+          name = "Avante",
+          kind = "Avante",
           min_keyword_length = 3,
           score_offset = 90, -- the higher the number, the higher the priority
           async = true,
-        },
-
-        -- Avante completion
-        avante_commands = {
-          name = "avante_commands",
-          module = "blink.compat.source",
-          enabled = true,
-          kind = "Avante",
-          score_offset = 90, -- show at a higher priority than lsp
-          opts = {},
-        },
-        avante_files = {
-          name = "avante_files",
-          module = "blink.compat.source",
-          enabled = true,
-          kind = "Avante",
-          score_offset = 100, -- show at a higher priority than lsp
-          opts = {},
-        },
-        avante_mentions = {
-          name = "avante_mentions",
-          module = "blink.compat.source",
-          enabled = true,
-          kind = "Avante",
-          score_offset = 1000, -- show at a higher priority than lsp
-          opts = {},
+          opts = {
+            -- options for blink-cmp-avante
+          },
         },
 
         -- Code Companion
@@ -303,23 +287,19 @@ return {
           score_offset = 95, -- show at a higher priority than lsp
           opts = {},
         },
+
+        -- Copilot
+        copilot = {
+          name = "copilot",
+          enabled = true,
+          module = "blink-cmp-copilot",
+          kind = "Copilot",
+          min_keyword_length = 3,
+          score_offset = 90, -- the higher the number, the higher the priority
+          async = true,
+        },
       },
     })
-
-    opts.cmdline = {
-      -- command line completion, thanks to dpetka2001 in reddit
-      -- https://www.reddit.com/r/neovim/comments/1hjjf21/comment/m37fe4d/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-      sources = function()
-        local type = vim.fn.getcmdtype()
-        if type == "/" or type == "?" then
-          return { "buffer" }
-        end
-        if type == ":" then
-          return { "cmdline" }
-        end
-        return {}
-      end,
-    }
 
     opts.completion = {
       --   keyword = {
