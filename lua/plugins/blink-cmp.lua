@@ -280,7 +280,7 @@ return {
 
         -- Code Companion
         codecompanion = {
-          name = "codecompanion",
+          name = "CodeCompanion",
           module = "codecompanion.providers.completion.blink",
           enabled = true,
           kind = "CodeCompanion",
@@ -290,7 +290,7 @@ return {
 
         -- Copilot
         copilot = {
-          name = "copilot",
+          name = "Copilot",
           enabled = true,
           module = "blink-cmp-copilot",
           kind = "Copilot",
