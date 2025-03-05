@@ -15,7 +15,9 @@ return {
   dependencies = {
     "Kaiser-Yang/blink-cmp-avante",
     "Kaiser-Yang/blink-cmp-dictionary",
+    "Kaiser-Yang/blink-cmp-git",
     "moyiz/blink-emoji.nvim",
+    "nvim-lua/plenary.nvim",
     "rafamadriz/friendly-snippets",
   },
 
@@ -58,6 +60,8 @@ return {
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
       default = {
         "avante",
+        "codecompanion",
+        "copilot",
         "lazydev",
         "lsp",
         "path",
@@ -66,8 +70,7 @@ return {
         "dadbod",
         "emoji",
         "dictionary",
-        "codecompanion",
-        "copilot",
+        "git",
         "omni",
       },
 
@@ -134,6 +137,14 @@ return {
                 end)
                 :totable()
             end,
+          },
+        },
+
+        git = {
+          module = "blink-cmp-git",
+          name = "Git",
+          opts = {
+            -- options for the blink-cmp-git
           },
         },
 

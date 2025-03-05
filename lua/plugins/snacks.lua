@@ -7,7 +7,7 @@ return {
   ---@type snacks.Config
 
   opts = {
-    animate = { enabled = true },
+    animate = { enabled = false },
     bigfile = {
       enabled = true,
       notify = true,
