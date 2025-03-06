@@ -89,8 +89,8 @@ return {
     strategies = {
       -- Change the default chat adapter
       chat = {
-        -- adapter = "anthropic",
-        adapter = "openai",
+        adapter = "anthropic",
+        -- adapter = "openai",
         keymaps = {
           send = {
             modes = { n = "<C-s>", i = "<C-s>" },
