@@ -221,9 +221,10 @@ return {
       end,
       -- In case you want to make sure that the score manipulation above works
       -- or if you want to check the score of each file
-      -- debug = {
-      --   scores = true, -- show scores in the list
-      -- },
+      debug = {
+        --   scores = true, -- show scores in the list
+        scores = false,
+      },
       -- I like the "ivy" layout, so I set it as the default globaly, you can
       -- still override it in different keymaps
       layout = {
@@ -295,6 +296,12 @@ return {
             ["H"] = { "preview_scroll_left", mode = { "i", "n" } },
             ["L"] = { "preview_scroll_right", mode = { "i", "n" } },
           },
+        },
+      },
+      formatters = {
+        file = {
+          filename_first = true, -- display filename before the file path
+          truncate = 80,
         },
       },
     },

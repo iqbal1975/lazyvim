@@ -166,27 +166,28 @@ return {
           end,
           -- After accepting the completion, delete the trigger_text characters
           -- from the final inserted text
+          -- Modified transform_items function based on suggestion by `synic` so
+          -- that the luasnip source is not reloaded after each transformation
+          -- https://github.com/linkarzu/dotfiles-latest/discussions/7#discussion-7849902
           transform_items = function(_, items)
             local col = vim.api.nvim_win_get_cursor(0)[2]
             local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
             local trigger_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
             if trigger_pos then
               for _, item in ipairs(items) do
-                item.textEdit = {
-                  newText = item.insertText or item.label,
-                  range = {
-                    start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
-                    ["end"] = { line = vim.fn.line(".") - 1, character = col },
-                  },
-                }
+                if not item.trigger_text_modified then
+                  ---@diagnostic disable-next-line: inject-field
+                  item.trigger_text_modified = true
+                  item.textEdit = {
+                    newText = item.insertText or item.label,
+                    range = {
+                      start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
+                      ["end"] = { line = vim.fn.line(".") - 1, character = col },
+                    },
+                  }
+                end
               end
             end
-            -- NOTE: After the transformation, I have to reload the luasnip source
-            -- Otherwise really crazy shit happens and I spent way too much time
-            -- figurig this out
-            vim.schedule(function()
-              require("blink.cmp").reload("snippets")
-            end)
             return items
           end,
           -- For `snippets.preset == 'luasnip'`
@@ -312,6 +313,10 @@ return {
       },
     })
 
+    opts.cmdline = {
+      enabled = true,
+    }
+
     opts.completion = {
       --   keyword = {
       --     -- 'prefix' will fuzzy match on the text before the cursor
@@ -355,23 +360,14 @@ return {
     }
 
     opts.snippets = {
-      preset = "luasnip",
-      -- This comes from the luasnip extra, if you don't add it, won't be able to
-      -- jump forward or backward in luasnip snippets
-      -- https://www.lazyvim.org/extras/coding/luasnip#blinkcmp-optional
-      expand = function(snippet)
-        require("luasnip").lsp_expand(snippet)
-      end,
-      active = function(filter)
-        if filter and filter.direction then
-          return require("luasnip").jumpable(filter.direction)
-        end
-        return require("luasnip").in_snippet()
-      end,
-      jump = function(direction)
-        require("luasnip").jump(direction)
-      end,
+      preset = "luasnip", -- Choose LuaSnip as the snippet engine
     }
+
+    -- -- To specify the options for snippets
+    -- opts.sources.providers.snippets.opts = {
+    --   use_show_condition = true, -- Enable filtering of snippets dynamically
+    --   show_autosnippets = true, -- Display autosnippets in the completion menu
+    -- }
 
     -- Blink.cmp uses a Rust fuzzy matcher by default for typo resistance and significantly better performance
     -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
