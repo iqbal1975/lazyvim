@@ -5,6 +5,19 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "j-hui/fidget.nvim",
   },
+  -- {
+  --   "ravitemer/mcphub.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --   },
+  --   build = "npm install -g mcp-hub@latest",
+  --   config = function()
+  --     require("mcphub").setup({
+  --       port = 3600,
+  --       config = vim.fn.expand("~/mcpservers.json"),
+  --     })
+  --   end,
+  -- },
   opts = {
     send_code = false,
     adapters = {
@@ -100,6 +113,15 @@ return {
           },
           -- Add further custom keymaps here
         },
+        -- tools = {
+        --   ["mcp"] = {
+        --     callback = require("mcphub.extensions.codecompanion"),
+        --     description = "Call tools and resources from the MCP Servers",
+        --     opts = {
+        --       user_approval = true,
+        --     },
+        --   },
+        -- },
         roles = {
           ---The header name for the LLM's messages
           ---@type string|fun(adapter: table): string
@@ -128,8 +150,8 @@ return {
       },
     },
     opts = {
-      -- Set debug logging
-      log_level = "DEBUG",
+      -- Turn on logging
+      log_level = "DEBUG", -- or "TRACE"
     },
   },
   init = function()
