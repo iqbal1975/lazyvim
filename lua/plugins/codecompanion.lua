@@ -1,5 +1,6 @@
 return {
   "olimorris/codecompanion.nvim",
+  -- enabled = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
@@ -135,8 +136,8 @@ return {
         },
       },
       inline = {
-        -- adapter = "anthropic",
-        adapter = "copilot",
+        adapter = "anthropic",
+        -- adapter = "copilot",
         keymaps = {
           accept_change = {
             modes = { n = "ga" },
