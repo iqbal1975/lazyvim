@@ -1,6 +1,7 @@
 return {
   {
     "yetone/avante.nvim",
+    -- enabled = false, -- set this to true to enable the plugin
     event = "VeryLazy",
     lazy = false,
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.

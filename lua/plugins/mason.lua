@@ -49,6 +49,7 @@ return {
         "emmet_ls",
         "eslint",
         "gopls",
+        "harper_ls",
         "html",
         "hyprls",
         "intelephense",

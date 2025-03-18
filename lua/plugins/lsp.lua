@@ -126,6 +126,30 @@ return {
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
 
+    -- configure harper server
+    lspconfig["harper_ls"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      enabled = true,
+      filetypes = { "markdown" },
+      settings = {
+        ["harper-ls"] = {
+          userDictPath = "~/apps/dictionaries/en.utf-8.add",
+          linters = {
+            ToDoHyphen = false,
+            -- SentenceCapitalization = true,
+            -- SpellCheck = true,
+          },
+          isolateEnglish = true,
+          markdown = {
+            -- [ignores this part]()
+            -- [[ also ignores my marksman links ]]
+            IgnoreLinkTitle = true,
+          },
+        },
+      },
+    })
+
     -- configure html server
     lspconfig["html"].setup({
       capabilities = capabilities,
