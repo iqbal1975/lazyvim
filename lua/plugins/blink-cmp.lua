@@ -6,7 +6,247 @@
 -- Documentation site: https://cmp.saghen.dev/
 
 -- NOTE: Specify the trigger character(s) used for luasnip
+-- Configuration variables
 local trigger_text = ";"
+local disabled_filetypes = { "TelescopePrompt", "minifiles", "snacks_picker_input" }
+
+-- Helper functions
+local function is_filetype_enabled()
+  local filetype = vim.bo[0].filetype
+  return not vim.tbl_contains(disabled_filetypes, filetype)
+end
+
+local function create_snippet_transformer()
+  return function(_, items)
+    local col = vim.api.nvim_win_get_cursor(0)[2]
+    local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
+    local trigger_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
+    if trigger_pos then
+      for _, item in ipairs(items) do
+        if not item.trigger_text_modified then
+          item.trigger_text_modified = true
+          item.textEdit = {
+            newText = item.insertText or item.label,
+            range = {
+              start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
+              ["end"] = { line = vim.fn.line(".") - 1, character = col },
+            },
+          }
+        end
+      end
+    end
+    return items
+  end
+end
+
+-- Source configurations
+local source_configs = {
+  lazydev = {
+    name = "LazyDev",
+    enabled = true,
+    module = "lazydev.integrations.blink",
+    kind = "LDev",
+    score_offset = 100,
+  },
+
+  lsp = {
+    name = "lsp",
+    enabled = true,
+    module = "blink.cmp.sources.lsp",
+    kind = "LSP",
+    min_keyword_length = 3,
+    fallbacks = { "buffer" },
+    score_offset = 85,
+    transform_items = function(_, items)
+      return vim.tbl_filter(function(item)
+        return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
+      end, items)
+    end,
+  },
+
+  path = {
+    name = "Path",
+    enabled = true,
+    module = "blink.cmp.sources.path",
+    score_offset = 25,
+    fallbacks = { "buffer" },
+    min_keyword_length = 3,
+    opts = {
+      trailing_slash = false,
+      label_trailing_slash = true,
+      get_cwd = function(context)
+        return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
+      end,
+      show_hidden_files_by_default = true,
+    },
+  },
+
+  buffer = {
+    name = "Buffer",
+    enabled = true,
+    max_items = 15,
+    module = "blink.cmp.sources.buffer",
+    min_keyword_length = 3,
+    score_offset = 15, -- the higher the number, the higher the priority
+    opts = {
+      -- default to all visible buffers
+      get_bufnrs = function()
+        return vim
+          .iter(vim.api.nvim_list_wins())
+          :map(function(win)
+            return vim.api.nvim_win_get_buf(win)
+          end)
+          :filter(function(buf)
+            return vim.bo[buf].buftype ~= "nofile"
+          end)
+          :totable()
+      end,
+    },
+  },
+
+  git = {
+    module = "blink-cmp-git",
+    name = "Git",
+    opts = {
+      -- options for the blink-cmp-git
+    },
+  },
+
+  -- Example on how to configure dadbod found in the main repo
+  -- https://github.com/kristijanhusak/vim-dadbod-completion
+  dadbod = {
+    name = "Dadbod",
+    module = "vim_dadbod_completion.blink",
+    min_keyword_length = 3,
+    score_offset = 85, -- the higher the number, the higher the priority
+  },
+
+  -- https://github.com/moyiz/blink-emoji.nvim
+  emoji = {
+    module = "blink-emoji",
+    name = "Emoji",
+    score_offset = 90, -- the higher the number, the higher the priority
+    min_keyword_length = 2,
+    opts = { insert = true }, -- Insert emoji (default) or complete its name
+  },
+
+  -- https://github.com/Kaiser-Yang/blink-cmp-dictionary
+  -- In macOS to get started with a dictionary:
+  -- cp /usr/share/dict/words ~/github/dotfiles-latest/dictionaries/words.txt
+  --
+  -- NOTE: For the word definitions make sure "wn" is installed
+  -- brew install wordnet
+  dictionary = {
+    module = "blink-cmp-dictionary",
+    name = "Dict",
+    score_offset = 20, -- the higher the number, the higher the priority
+    -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
+    enabled = true,
+    max_items = 10,
+    min_keyword_length = 3,
+    opts = {
+      -- -- The dictionary by default now uses fzf, make sure to have it
+      -- -- installed
+      -- -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
+      --
+      -- Do not specify a file, just the path, and in the path you need to
+      -- have your .txt files
+      dictionary_directories = { vim.fn.expand("~/apps/dictionaries") },
+      -- Notice I'm also adding the words I add to the spell dictionary
+      dictionary_files = {
+        vim.fn.expand("~/apps/dictionaries/en.utf-8.add"),
+      },
+      --  NOTE: To disable the definitions uncomment this section below
+      --
+      -- separate_output = function(output)
+      --   local items = {}
+      --   for line in output:gmatch("[^\r\n]+") do
+      --     table.insert(items, {
+      --       label = line,
+      --       insert_text = line,
+      --       documentation = nil,
+      --     })
+      --   end
+      --   return items
+      -- end,
+    },
+  },
+
+  -- Command Line
+  cmdline = {
+    name = "cmdline",
+    module = "blink.cmp.sources.cmdline",
+    -- ignores cmdline completions when executing shell commands
+    enabled = function()
+      return vim.fn.getcmdtype() ~= ":" or not vim.fn.getcmdline():match("^[%%0-9,'<>%-]*!")
+    end,
+  },
+
+  omni = {
+    name = "Omni",
+    module = "blink.cmp.sources.complete_func",
+    enabled = true,
+    opts = {
+      disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
+    },
+  },
+
+  -- AI Companions
+  -- Avante completion
+  avante = {
+    module = "blink-cmp-avante",
+    name = "Avante",
+    kind = "Avante",
+    min_keyword_length = 3,
+    score_offset = 90, -- the higher the number, the higher the priority
+    async = true,
+    opts = {
+      -- options for blink-cmp-avante
+    },
+  },
+
+  -- Code Companion
+  codecompanion = {
+    name = "CodeCompanion",
+    module = "codecompanion.providers.completion.blink",
+    enabled = true,
+    kind = "CodeCompanion",
+    score_offset = 95, -- show at a higher priority than lsp
+    opts = {},
+  },
+
+  -- Copilot
+  copilot = {
+    name = "Copilot",
+    enabled = true,
+    module = "blink-cmp-copilot",
+    kind = "Copilot",
+    min_keyword_length = 3,
+    score_offset = 90, -- the higher the number, the higher the priority
+    async = true,
+  },
+}
+
+-- Snippet configuration
+local snippet_config = {
+  name = "snippets",
+  enabled = true,
+  max_items = 15,
+  min_keyword_length = 3,
+  module = "blink.cmp.sources.snippets",
+  score_offset = 85,
+  should_show_items = function()
+    local col = vim.api.nvim_win_get_cursor(0)[2]
+    local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
+    return before_cursor:match(trigger_text .. "%w*$") ~= nil
+  end,
+  -- Snippet-specific settings...
+  transform_items = create_snippet_transformer(),
+  opts = {
+    use_show_condition = true,
+    show_autosnippets = true,
+  },
+}
 
 return {
   "saghen/blink.cmp",
@@ -23,40 +263,26 @@ return {
 
   -- use a release tag to download pre-built binaries
   version = "*",
-
   event = { "InsertEnter", "CmdlineEnter" },
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
 
+  -- Plugin configuration with cleaner structure...
   opts = function(_, opts)
-    -- I noticed that telescope was extremeley slow and taking too long to open,
-    -- assumed related to blink, so disabled blink and in fact it was related
-    -- :lua print(vim.bo[0].filetype)
-    -- So I'm disabling blink.cmp for Telescope
-    opts.enabled = function()
-      -- Get the current buffer's filetype
-      local filetype = vim.bo[0].filetype
-      -- Disable for Telescope buffers
-      if filetype == "TelescopePrompt" or filetype == "minifiles" or filetype == "snacks_picker_input" then
-        return false
-      end
-      return true
-    end
+    -- Enable/disable based on filetype
+    opts.enabled = is_filetype_enabled
 
+    -- Appearance settings
     opts.appearance = {
-      -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-      -- Useful for when your theme doesn't support blink.cmp
-      -- Will be removed in a future release
       use_nvim_cmp_as_default = true,
-      -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = "mono",
     }
 
     -- NOTE: The new way to enable LuaSnip
     -- Merge custom sources with the existing ones from lazyvim
     -- NOTE: by default lazyvim already includes the lazydev source, so not adding it here again
+    -- Configure sources
     opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
       default = {
         "avante",
@@ -74,243 +300,7 @@ return {
         "omni",
       },
 
-      providers = {
-        lazydev = {
-          name = "LazyDev",
-          enabled = true,
-          module = "lazydev.integrations.blink",
-          kind = "LDev",
-          -- make lazydev completions top priority (see `:h blink.cmp`)
-          score_offset = 100,
-        },
-
-        lsp = {
-          name = "lsp",
-          enabled = true,
-          module = "blink.cmp.sources.lsp",
-          kind = "LSP",
-          min_keyword_length = 3,
-          fallbacks = { "buffer" },
-          score_offset = 85, -- the higher the number, the higher the priority
-          -- Filter text items from the LSP provider, since we have the buffer provider for that
-          transform_items = function(_, items)
-            return vim.tbl_filter(function(item)
-              return item.kind ~= require("blink.cmp.types").CompletionItemKind.Text
-            end, items)
-          end,
-        },
-
-        path = {
-          name = "Path",
-          enabled = true,
-          module = "blink.cmp.sources.path",
-          score_offset = 25,
-          fallbacks = { "buffer" },
-          min_keyword_length = 3,
-          opts = {
-            trailing_slash = false,
-            label_trailing_slash = true,
-            get_cwd = function(context)
-              return vim.fn.expand(("#%d:p:h"):format(context.bufnr))
-            end,
-            show_hidden_files_by_default = true,
-          },
-        },
-
-        buffer = {
-          name = "Buffer",
-          enabled = true,
-          max_items = 15,
-          module = "blink.cmp.sources.buffer",
-          min_keyword_length = 3,
-          score_offset = 15, -- the higher the number, the higher the priority
-          opts = {
-            -- default to all visible buffers
-            get_bufnrs = function()
-              return vim
-                .iter(vim.api.nvim_list_wins())
-                :map(function(win)
-                  return vim.api.nvim_win_get_buf(win)
-                end)
-                :filter(function(buf)
-                  return vim.bo[buf].buftype ~= "nofile"
-                end)
-                :totable()
-            end,
-          },
-        },
-
-        git = {
-          module = "blink-cmp-git",
-          name = "Git",
-          opts = {
-            -- options for the blink-cmp-git
-          },
-        },
-
-        snippets = {
-          name = "snippets",
-          enabled = true,
-          max_items = 15,
-          min_keyword_length = 3,
-          module = "blink.cmp.sources.snippets",
-          score_offset = 85, -- the higher the number, the higher the priority
-          -- Only show snippets if I type the trigger_text characters, so
-          -- to expand the "bash" snippet, if the trigger_text is ";" I have to
-          -- type ";bash"
-          should_show_items = function()
-            local col = vim.api.nvim_win_get_cursor(0)[2]
-            local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
-            -- NOTE: remember that `trigger_text` is modified at the top of the file
-            return before_cursor:match(trigger_text .. "%w*$") ~= nil
-          end,
-          -- After accepting the completion, delete the trigger_text characters
-          -- from the final inserted text
-          -- Modified transform_items function based on suggestion by `synic` so
-          -- that the luasnip source is not reloaded after each transformation
-          -- https://github.com/linkarzu/dotfiles-latest/discussions/7#discussion-7849902
-          transform_items = function(_, items)
-            local col = vim.api.nvim_win_get_cursor(0)[2]
-            local before_cursor = vim.api.nvim_get_current_line():sub(1, col)
-            local trigger_pos = before_cursor:find(trigger_text .. "[^" .. trigger_text .. "]*$")
-            if trigger_pos then
-              for _, item in ipairs(items) do
-                if not item.trigger_text_modified then
-                  ---@diagnostic disable-next-line: inject-field
-                  item.trigger_text_modified = true
-                  item.textEdit = {
-                    newText = item.insertText or item.label,
-                    range = {
-                      start = { line = vim.fn.line(".") - 1, character = trigger_pos - 1 },
-                      ["end"] = { line = vim.fn.line(".") - 1, character = col },
-                    },
-                  }
-                end
-              end
-            end
-            return items
-          end,
-          -- For `snippets.preset == 'luasnip'`
-          opts = {
-            -- Whether to use show_condition for filtering snippets
-            use_show_condition = true,
-            -- Whether to show autosnippets in the completion list
-            show_autosnippets = true,
-          },
-        },
-
-        -- Example on how to configure dadbod found in the main repo
-        -- https://github.com/kristijanhusak/vim-dadbod-completion
-        dadbod = {
-          name = "Dadbod",
-          module = "vim_dadbod_completion.blink",
-          min_keyword_length = 3,
-          score_offset = 85, -- the higher the number, the higher the priority
-        },
-
-        -- https://github.com/moyiz/blink-emoji.nvim
-        emoji = {
-          module = "blink-emoji",
-          name = "Emoji",
-          score_offset = 90, -- the higher the number, the higher the priority
-          min_keyword_length = 2,
-          opts = { insert = true }, -- Insert emoji (default) or complete its name
-        },
-
-        -- https://github.com/Kaiser-Yang/blink-cmp-dictionary
-        -- In macOS to get started with a dictionary:
-        -- cp /usr/share/dict/words ~/github/dotfiles-latest/dictionaries/words.txt
-        --
-        -- NOTE: For the word definitions make sure "wn" is installed
-        -- brew install wordnet
-        dictionary = {
-          module = "blink-cmp-dictionary",
-          name = "Dict",
-          score_offset = 20, -- the higher the number, the higher the priority
-          -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
-          enabled = true,
-          max_items = 10,
-          min_keyword_length = 3,
-          opts = {
-            -- -- The dictionary by default now uses fzf, make sure to have it
-            -- -- installed
-            -- -- https://github.com/Kaiser-Yang/blink-cmp-dictionary/issues/2
-            --
-            -- Do not specify a file, just the path, and in the path you need to
-            -- have your .txt files
-            dictionary_directories = { vim.fn.expand("~/apps/dictionaries") },
-            -- Notice I'm also adding the words I add to the spell dictionary
-            dictionary_files = {
-              vim.fn.expand("~/apps/dictionaries/en.utf-8.add"),
-            },
-            --  NOTE: To disable the definitions uncomment this section below
-            --
-            -- separate_output = function(output)
-            --   local items = {}
-            --   for line in output:gmatch("[^\r\n]+") do
-            --     table.insert(items, {
-            --       label = line,
-            --       insert_text = line,
-            --       documentation = nil,
-            --     })
-            --   end
-            --   return items
-            -- end,
-          },
-        },
-
-        -- Command Line
-        cmdline = {
-          -- ignores cmdline completions when executing shell commands
-          enabled = function()
-            return vim.fn.getcmdtype() ~= ":" or not vim.fn.getcmdline():match("^[%%0-9,'<>%-]*!")
-          end,
-        },
-
-        omni = {
-          name = "Omni",
-          module = "blink.cmp.sources.omni",
-          enabled = true,
-          opts = {
-            disable_omnifuncs = { "v:lua.vim.lsp.omnifunc" },
-          },
-        },
-
-        -- AI Companions
-        -- Avante completion
-        avante = {
-          module = "blink-cmp-avante",
-          name = "Avante",
-          kind = "Avante",
-          min_keyword_length = 3,
-          score_offset = 90, -- the higher the number, the higher the priority
-          async = true,
-          opts = {
-            -- options for blink-cmp-avante
-          },
-        },
-
-        -- Code Companion
-        codecompanion = {
-          name = "CodeCompanion",
-          module = "codecompanion.providers.completion.blink",
-          enabled = true,
-          kind = "CodeCompanion",
-          score_offset = 95, -- show at a higher priority than lsp
-          opts = {},
-        },
-
-        -- Copilot
-        copilot = {
-          name = "Copilot",
-          enabled = true,
-          module = "blink-cmp-copilot",
-          kind = "Copilot",
-          min_keyword_length = 3,
-          score_offset = 90, -- the higher the number, the higher the priority
-          async = true,
-        },
-      },
+      providers = vim.tbl_extend("force", source_configs, { snippets = snippet_config }),
     })
 
     opts.cmdline = {

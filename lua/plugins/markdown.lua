@@ -1,17 +1,13 @@
 return {
-
+  -- Markdown rendering with treesitter
   {
     "MeanderingProgrammer/render-markdown.nvim",
     enabled = true,
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
     ft = { "markdown", "codecompanion" },
     opts = {
-      bullet = {
-        -- Turn on / off list bullet rendering
-        enabled = true,
-      },
+      bullet = { enabled = true },
       checkbox = {
-        -- Turn on / off checkbox state rendering
         enabled = true,
         -- Determines how icons fill the available space:
         --  inline:  underlying text is concealed resulting in a left aligned icon
@@ -35,10 +31,8 @@ return {
         },
       },
       html = {
-        -- Turn on / off all HTML rendering
         enabled = true,
         comment = {
-          -- Turn on / off HTML comment concealing
           conceal = false,
         },
       },
@@ -50,7 +44,7 @@ return {
     },
   },
 
-  -- install with yarn or npm
+  -- Markdown preview in browser
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -61,16 +55,6 @@ return {
     ft = { "markdown" },
   },
 
-  {
-    "OXY2DEV/markview.nvim",
-    lazy = false,
-    opts = {
-      preview = {
-        filetypes = { "markdown", "codecompanion" },
-        ignore_buftypes = {},
-      },
-    },
-  },
-
+  -- Improved writing experience
   "preservim/vim-pencil",
 }
