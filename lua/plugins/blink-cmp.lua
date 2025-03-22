@@ -265,9 +265,6 @@ return {
   version = "*",
   event = { "InsertEnter", "CmdlineEnter" },
 
-  ---@module 'blink.cmp'
-  ---@type blink.cmp.Config
-
   -- Plugin configuration with cleaner structure...
   opts = function(_, opts)
     -- Enable/disable based on filetype

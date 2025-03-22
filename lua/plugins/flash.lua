@@ -3,7 +3,7 @@ return {
     "folke/flash.nvim",
     -- enabled = false,
     event = "VeryLazy",
-    ---@type Flash.Config
+    -- ---@type Flash.Config
     opts = {
       search = {
         -- If mode is set to the default "exact" if you mistype a word, it will

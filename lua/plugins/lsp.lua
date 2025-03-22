@@ -74,9 +74,9 @@ return {
 
     -- configure clangd server
     lspconfig["clangd"].setup({
-      capabilities = {
+      capabilities = vim.tbl_deep_extend("force", capabilities, {
         offsetEncoding = { "utf-16" },
-      },
+      }),
       on_attach = on_attach,
     })
 
@@ -95,16 +95,6 @@ return {
 
     -- configure eslint server
     lspconfig["eslint"].setup({
-      eslint = function()
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          callback = function(event)
-            if not require("lazyvim.plugins.lsp.format").enabled() then
-              -- exit early if autoformat is not enabled
-              return
-            end
-          end,
-        })
-      end,
       capabilities = capabilities,
       on_attach = on_attach,
       settings = {
