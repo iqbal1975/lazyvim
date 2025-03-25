@@ -21,14 +21,16 @@ return {
       },
     },
   },
-  vim.keymap.set("n", "<leader>Qq", function()
-    require("quicker").toggle()
-  end, {
-    desc = "Toggle quickfix",
-  }),
-  vim.keymap.set("n", "<leader>Ql", function()
-    require("quicker").toggle({ loclist = true })
-  end, {
-    desc = "Toggle loclist",
-  }),
+  config = function()
+    vim.keymap.set("n", "<leader>Qq", function()
+      require("quicker").toggle()
+    end, {
+      desc = "Toggle quickfix",
+    })
+    vim.keymap.set("n", "<leader>Ql", function()
+      require("quicker").toggle({ loclist = true })
+    end, {
+      desc = "Toggle loclist",
+    })
+  end,
 }

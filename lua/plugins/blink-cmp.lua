@@ -251,7 +251,6 @@ local snippet_config = {
 return {
   "saghen/blink.cmp",
   -- enabled = false,
-  -- optional: provides snippets for the snippet source
   dependencies = {
     "Kaiser-Yang/blink-cmp-avante",
     "Kaiser-Yang/blink-cmp-dictionary",
