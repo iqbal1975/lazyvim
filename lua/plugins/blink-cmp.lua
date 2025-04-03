@@ -84,7 +84,7 @@ local source_configs = {
   buffer = {
     name = "Buffer",
     enabled = true,
-    max_items = 15,
+    max_items = 3,
     module = "blink.cmp.sources.buffer",
     min_keyword_length = 3,
     score_offset = 15, -- the higher the number, the higher the priority
@@ -151,10 +151,10 @@ local source_configs = {
       --
       -- Do not specify a file, just the path, and in the path you need to
       -- have your .txt files
-      dictionary_directories = { vim.fn.expand("~/apps/dictionaries") },
+      dictionary_directories = { vim.fn.expand("/srv/dictionaries") },
       -- Notice I'm also adding the words I add to the spell dictionary
       dictionary_files = {
-        vim.fn.expand("~/apps/dictionaries/en.utf-8.add"),
+        vim.fn.expand("/srv/dictionaries/en.utf-8.add"),
       },
       --  NOTE: To disable the definitions uncomment this section below
       --
