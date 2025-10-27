@@ -2,7 +2,8 @@ return { -- Highlight, Edit, and Navigate Code
   {
     -- Configure Treesitter
     "nvim-treesitter/nvim-treesitter",
-    version = false, -- last release is way too old and doesn't work on Windows
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     event = { "BufReadPre", "BufReadPost", "BufNewFile" },
     dependencies = {

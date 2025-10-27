@@ -4,6 +4,7 @@
 -- * add extra plugins
 -- * disable/enable LazyVim plugins
 -- * override the configuration of LazyVim plugins
+
 return {
 
   -- Code Folding
@@ -43,28 +44,6 @@ return {
     },
   },
 
-  -- Grapple (Immediate Navigation to Important Files)
-  {
-    "cbochs/grapple.nvim",
-    opts = {
-      scope = "git", -- also try out "git_branch"
-    },
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = "Grapple",
-    keys = {
-      { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
-      { "<leader>M", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
-      { "<leader>k", "<cmd>Grapple toggle_scopes<cr>", desc = "Grapple toggle scopes" },
-      { "<leader>j", "<cmd>Grapple cycle forward<cr>", desc = "Grapple cycle forward" },
-      { "<leader>J", "<cmd>Grapple cycle backward<cr>", desc = "Grapple cycle backward" },
-      { "<leader>6", "<cmd>Grapple select index=1<cr>", desc = "Grapple Select File 1" },
-      { "<leader>7", "<cmd>Grapple select index=2<cr>", desc = "Grapple Select File 2" },
-      { "<leader>8", "<cmd>Grapple select index=3<cr>", desc = "Grapple Select File 3" },
-      { "<leader>9", "<cmd>Grapple select index=4<cr>", desc = "Grapple Select File 4" },
-      { "<leader>0", "<cmd>Grapple select index=5<cr>", desc = "Grapple Select File 5" },
-    },
-  },
-
   -- Join-Line Opposite
   {
     "AckslD/nvim-trevJ.lua",
@@ -76,6 +55,22 @@ return {
     end,
   },
 
+  -- HTTP-client Interface
+  {
+    "mistweaverco/kulala.nvim",
+    keys = {
+      { "<leader>cR", desc = "Send request" },
+      { "<leader>cA", desc = "Send all requests" },
+      { "<leader>cB", desc = "Open scratchpad" },
+    },
+    ft = { "http", "rest" },
+    opts = {
+      global_keymaps = false,
+      global_keymaps_prefix = "<leader>c",
+      kulala_keymaps_prefix = "",
+    },
+  },
+
   -- Oil.nvim
   {
     "stevearc/oil.nvim",
@@ -84,17 +79,12 @@ return {
     ---@type oil.SetupOpts
 
     opts = {},
-    -- Optional dependencies
-    dependencies = { { "echasnovski/mini.icons", opts = {} } },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    dependencies = { { "nvim-mini/mini.icons", opts = {} } },
     lazy = false,
 
     -- Oil Keymaps
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Oil - Parent Directory" }),
-
     vim.keymap.set("n", ".", "<CMD>Oil toggle_hidden<CR>", { desc = "Oil - Toggle Hidden" }),
-
     vim.keymap.set("n", "<C-\\>", "<CMD>Oil toggle_trash<CR>", { desc = "Oil - Toggle Trash" }),
   },
 

@@ -4,7 +4,7 @@ return {
   -- optional for icon support
   dependencies = { "nvim-tree/nvim-web-devicons" },
   -- or if using mini.icons/mini.nvim
-  -- dependencies = { "echasnovski/mini.icons" },
+  -- dependencies = { "nvim-mini/mini.icons" },
   opts = {},
   -- require("fzf-lua").setup({
   --   -- MISC GLOBAL SETUP OPTIONS, SEE BELOW
