@@ -97,3 +97,17 @@ vim.keymap.set("n", "<leader>Dvt", function()
   widgets.centered_float(widgets.threads, { border = "none" })
 end, { desc = "Show Threads" })
 -- DAP Keymaps
+
+-- Diagnostics Keymap
+vim.keymap.set('n', '<leader>uv', function()
+  vim.diagnostic.config({ virtual_lines = { current_line = false }, virtual_text = true })
+
+  vim.api.nvim_create_autocmd('CursorMoved', {
+    group = vim.api.nvim_create_augroup('line-diagnostics', { clear = true }),
+    callback = function()
+      vim.diagnostic.config({ virtual_lines = true, virtual_text = false })
+      return true
+    end,
+  })
+end, {desc = "Toggle Diagnostic Virtual Lines / Text" })
+-- Diagnostics Keymap
